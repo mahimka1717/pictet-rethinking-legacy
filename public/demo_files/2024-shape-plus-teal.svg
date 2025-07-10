@@ -1,0 +1,59 @@
+<svg id="Embellishment" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="154.071" height="146.959" viewBox="0 0 154.071 146.959">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: none;
+        stroke: #42737b;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_32530" data-name="Rectangle 32530" class="cls-1" width="154.071" height="146.959"/>
+    </clipPath>
+  </defs>
+  <g id="Group_48677" data-name="Group 48677">
+    <g id="Group_48676" data-name="Group 48676" class="cls-2">
+      <line id="Line_312" data-name="Line 312" class="cls-3" y1="33.708" transform="translate(14.916 0)"/>
+      <line id="Line_313" data-name="Line 313" class="cls-3" x2="29.833" transform="translate(0 16.854)"/>
+      <line id="Line_314" data-name="Line 314" class="cls-3" y1="33.708" transform="translate(77.036 0)"/>
+    </g>
+  </g>
+  <line id="Line_315" data-name="Line 315" class="cls-3" x2="33.708" transform="translate(60.182 16.854)"/>
+  <g id="Group_48679" data-name="Group 48679">
+    <g id="Group_48678" data-name="Group 48678" class="cls-2">
+      <line id="Line_316" data-name="Line 316" class="cls-3" y1="33.708" transform="translate(139.155 0)"/>
+      <line id="Line_317" data-name="Line 317" class="cls-3" x2="29.833" transform="translate(124.239 16.854)"/>
+    </g>
+  </g>
+  <line id="Line_318" data-name="Line 318" class="cls-3" y1="33.708" transform="translate(16.854 55.617)"/>
+  <g id="Group_48681" data-name="Group 48681">
+    <g id="Group_48680" data-name="Group 48680" class="cls-2">
+      <line id="Line_319" data-name="Line 319" class="cls-3" x2="29.833" transform="translate(0 72.471)"/>
+    </g>
+  </g>
+  <line id="Line_320" data-name="Line 320" class="cls-3" y1="33.708" transform="translate(77.036 55.617)"/>
+  <line id="Line_321" data-name="Line 321" class="cls-3" x2="33.708" transform="translate(60.182 72.471)"/>
+  <line id="Line_322" data-name="Line 322" class="cls-3" y1="33.708" transform="translate(137.218 55.617)"/>
+  <g id="Group_48683" data-name="Group 48683">
+    <g id="Group_48682" data-name="Group 48682" class="cls-2">
+      <line id="Line_323" data-name="Line 323" class="cls-3" x2="29.833" transform="translate(124.239 72.471)"/>
+      <line id="Line_324" data-name="Line 324" class="cls-3" y1="33.708" transform="translate(14.916 113.251)"/>
+      <line id="Line_325" data-name="Line 325" class="cls-3" x2="29.833" transform="translate(0 130.105)"/>
+      <line id="Line_326" data-name="Line 326" class="cls-3" y1="33.708" transform="translate(77.036 113.251)"/>
+    </g>
+  </g>
+  <line id="Line_327" data-name="Line 327" class="cls-3" x2="33.708" transform="translate(60.182 130.105)"/>
+  <g id="Group_48685" data-name="Group 48685">
+    <g id="Group_48684" data-name="Group 48684" class="cls-2">
+      <line id="Line_328" data-name="Line 328" class="cls-3" y1="33.708" transform="translate(139.155 113.251)"/>
+      <line id="Line_329" data-name="Line 329" class="cls-3" x2="29.833" transform="translate(124.239 130.105)"/>
+    </g>
+  </g>
+</svg>
