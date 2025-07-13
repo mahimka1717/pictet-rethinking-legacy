@@ -1,0 +1,260 @@
+@use 'mixins' as *
+@use 'variables' as *
+
+.chart
+    position: absolute
+
+    &[data-id="1"]
+        top: 46.9375rem
+        left: 11rem
+
+    &[data-id="2"]
+        top: 72.75rem
+        left: 18.5rem
+        .chart__wrapper
+            display: flex
+            flex-direction: column
+            align-items: center
+
+            .chart__subtitle
+                text-align: center
+                max-width: 42rem
+
+            .chart__caption
+                display: flex
+                position: absolute
+                &[data-id="1"]
+                    left: -17rem
+                    top: 19rem
+                &[data-id="2"]
+                    left: 27rem
+                    top: 29rem
+                &[data-id="3"]
+                    left: -4rem
+                    top: 48rem
+
+                .chart__caption_value
+                    color: $tertiary-color
+                    text-align: center
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-headings
+                    font-size: 8.75rem
+                    font-style: normal
+                    font-weight: 400
+                    line-height: 100%
+                    margin-right: 0.62rem
+                div
+                    padding-top: 0.32rem
+                    .chart__caption_text
+                        color: $primary-color
+                        font-feature-settings: 'liga' off, 'clig' off
+                        font-family: $font-headings
+                        font-size: 1.5rem
+                        font-style: normal
+                        font-weight: 400
+                        line-height: 120%
+                        &[data-id="1"]
+                            width: 14.6875rem
+                        &[data-id="2"]
+                            width: 14.5625rem
+                        &[data-id="3"]
+                            width: 20.375rem
+                    .chart__source
+                        color: $primary-color
+                        text-align: left
+                        font-feature-settings: 'liga' off, 'clig' off
+                        font-family: $font-primary
+                        font-size: 1.0625rem
+                        font-style: normal
+                        font-weight: 400
+                        line-height: 187%
+                        a
+                            text-decoration-line: underline
+                            text-decoration-style: solid
+                            text-decoration-skip-ink: auto
+                            text-decoration-thickness: auto
+                            text-underline-offset: auto
+                            text-underline-position: from-font
+
+    &[data-id="3"]
+        top: 58.6255rem
+        left: 11rem
+        .chart__wrapper
+            .chart__title
+                color: $tertiary-color
+    &[data-id="4"]
+        top: 35.1255rem
+        left: 11rem
+        .chart__wrapper
+            display: flex
+            flex-direction: column
+            align-items: center
+            .chart__title
+                text-align: center
+                margin-bottom: 1.75rem
+            .chart__subtitle
+                text-align: center
+                max-width: 27.65rem
+            .chart__source
+                margin-bottom: 3.375rem
+            .chart__svg
+                svg
+                    text
+                        font-weight: 500
+
+    &[data-id="5"]
+        top: 106.4375rem
+        left: 3.75rem
+        .chart__wrapper
+            .chart__subtitle
+                max-width: 20rem
+            .chart__svg
+                position: absolute
+                top: 8rem
+                left: 21rem
+            .chart__source
+                text-align: left
+
+    &[data-id="6"]
+        top: 28.625rem
+        left: 26rem
+        .chart__wrapper
+            display: flex
+            flex-direction: column
+            align-items: center
+
+            .chart__title
+                text-align: center
+                margin-bottom: 0.75rem
+
+            .chart__subtitle
+                text-align: center
+                max-width: 27.5rem
+
+            .chart__svg
+                position: relative
+                height: 40rem
+                margin-bottom: 1.375rem
+
+            .chart__caption
+                display: flex
+                position: absolute
+                &[data-id="1"]
+                    left: -22.25rem
+                    top: 16.25rem
+                &[data-id="2"]
+                    left: -22.25rem
+                    top: 26.25rem
+                &[data-id="3"]
+                    left: -22.25rem
+                    top: 36.25rem
+                &[data-id="4"]
+                    left: 23rem
+                    top: 16.25rem
+                &[data-id="5"]
+                    left: 23rem
+                    top: 26.25rem
+                &[data-id="6"]
+                    left: 23rem
+                    top: 36.25rem
+
+                .chart__caption_value
+                    color: $tertiary-color
+                    text-align: center
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-headings
+                    font-size: 6.25rem
+                    font-style: normal
+                    font-weight: 400
+                    line-height: 100%
+                    margin-right: 0.62rem
+                    width: 182px
+
+                .chart__caption_text
+                    padding-top: 0.32rem
+                    color: $primary-color
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-headings
+                    font-size: 1.5rem
+                    font-style: normal
+                    font-weight: 400
+                    line-height: 120%
+                    width: 15.75rem
+
+            .cahrt6-sp1
+                position: absolute
+                top: 12.75rem
+                left: -10rem
+                color: $primary-color
+                font-family: $font-primary
+                font-size: 0.75rem
+                font-style: normal
+                font-weight: 400
+                line-height: normal
+
+            .cahrt6-sp2
+                position: absolute
+                top: 12.75rem
+                left: 35rem
+                color: $primary-color
+                font-family: $font-primary
+                font-size: 0.75rem
+                font-style: normal
+                font-weight: 400
+                line-height: normal
+                width: 8rem
+
+            .cahrt6-sp3
+                position: absolute
+                top: 45.5rem
+                left: 35rem
+                color: $primary-color
+                font-family: $font-primary
+                font-size: 1.0625rem
+                font-style: normal
+                font-weight: 400
+                line-height: 1.4375rem
+                width: 18rem
+
+    .chart__wrapper
+        position: relative
+
+        .chart__title
+            color: $subheader-color
+            font-family: $font-headings
+            font-size: 2.25rem
+            font-style: normal
+            font-weight: 400
+            line-height: normal
+            margin-bottom: 0rem
+
+        .chart__subtitle
+            color: $primary-color
+            font-family: $font-headings
+            font-size: 1.5rem
+            font-style: normal
+            font-weight: 400
+            line-height: normal
+            margin-bottom: 1.75rem
+
+        .chart__svg
+            position: relative
+            margin-bottom: 1.375rem
+
+        .chart__source
+            color: $primary-color
+            text-align: center
+            font-feature-settings: 'liga' off, 'clig' off
+            font-family: $font-primary
+            font-size: 1.0625rem
+            font-style: normal
+            font-weight: 400
+            line-height: 187%
+
+            a
+                text-decoration-line: underline
+                text-decoration-style: solid
+                text-decoration-skip-ink: auto
+                text-decoration-thickness: auto
+                text-underline-offset: auto
+                text-underline-position: from-font

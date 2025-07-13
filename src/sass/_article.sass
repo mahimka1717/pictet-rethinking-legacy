@@ -1,15 +1,12 @@
 @use 'mixins' as *
 @use 'variables' as *
 
-
-
 .article *,
 .article *::before,
 .article *::after
-  margin: 0
-  padding: 0
-  box-sizing: border-box
-
+    margin: 0
+    padding: 0
+    box-sizing: border-box
 
 .article
     display: flex
@@ -18,43 +15,451 @@
     width: 100%
     -webkit-font-smoothing: antialiased
     position: relative
+    background: $bg-color
+    padding: 0 0 80px 80px
+    margin-bottom: -130px // connect with related article
+
+    &::before
+        content: ""
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        background: url('/images/bg.jpg') repeat
+        background-size: 1024px 1024px
+        background-attachment: fixed
+        opacity: 0.3 // прозрачность 30%
+        pointer-events: none // чтобы не блокировать клики
 
     .article-wrapper
-        width: 1440px
+        width: 1260px
+        height: 13382px
+        padding: 20px
         position: relative
-        @include media-breakpoint-down(xl)
-            width: 100%
-            padding: 40px
-        @include media-breakpoint-down(lg)
-            padding: 40px
-        @include media-breakpoint-down(md)
-            padding: $padding-sm
+
+        // @include mbp-down(xl)
+        //     width: 100%
+
+        .chapter
+            position: relative
+
+            &[data-id]:nth-of-type(odd)
+                .h2 span
+                    color: $secondary-color
+            &[data-id]:nth-of-type(even)
+                .h2 span
+                    color: $tertiary-color
+
+            &[data-id="0"]
+                height: 60.4375rem
+
+            &[data-id="1"]
+                height: 164rem
+                .h2
+                    left: 18.25rem
+                    width: 42.25rem
+
+            &[data-id="2"]
+                height: 156rem
+                .h2
+                    left: 18.25rem
+                    width: 42.25rem
+
+            &[data-id="3"]
+                height: 130rem
+                .h2
+                    left: 19.25rem
+                    width: 40.25rem
+
+            &[data-id="4"]
+                height: 149rem
+                .h2
+                    left: 18.25rem
+                    width: 42.25rem
+
+            &[data-id="5"]
+                height: 177rem
+                .h2
+                    left: 19.25rem
+                    width: 40.25rem
+
+          
 
 
+            .h1-wrapper
+                position: absolute
+                left: 136px
+                top: 233px
+                width: 61.6875rem
+
+                &::before
+                    content: ""
+                    position: absolute
+                    left: 50%
+                    top: 50%
+                    transform: translate(-50%, -50%)
+                    width: 69.25rem
+                    height: 32.4375rem
+                    border-radius: 69.25rem
+                    background: radial-gradient(50% 50% at 50% 50%, #FFF 0%, rgba(255, 255, 255, 0.00) 100%)
+                    flex-shrink: 0
+                    z-index: 0
+                    pointer-events: none
+                    
+
+                .h1
+                    position: relative
+                    width: 100%
+                    text-wrap: balance
+                    color: $header-color
+                    text-align: center
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-headings
+                    font-size: 4.375rem
+                    font-style: normal
+                    font-weight: 400
+                    line-height: 120%
+                    z-index: 1
+
+                    span
+                        color: $secondary-color
+                        text-align: center
+                        font-feature-settings: 'liga' off, 'clig' off
+                        font-family: $font-headings
+                        font-size: 1.25rem
+                        font-style: italic
+                        font-weight: 700
+                        line-height: 120%
+                        display: block
+
+                    mark
+                        color: $header-color
+                        font-feature-settings: 'liga' off, 'clig' off
+                        font-family: $font-headings
+                        font-size: 4.375rem
+                        font-style: italic
+                        font-weight: 400
+                        line-height: 120%
+                        text-decoration-line: underline
+                        text-decoration-style: solid
+                        text-decoration-skip-ink: auto
+                        text-decoration-thickness: 3px
+                        text-underline-offset: auto
+                        text-underline-position: from-font
+                        background: transparent
+
+            .subheader
+                position: absolute
+                left: 268px
+                top: 570px
+                width: 45.25rem
+                color: $primary-color
+                text-align: center
+                font-feature-settings: 'liga' off, 'clig' off
+                font-family: $font-headings
+                font-size: 1.875rem
+                font-style: normal
+                font-weight: 400
+                line-height: 120%
+                text-wrap: stable
+
+                mark
+                    font-weight: 400
+                    color: $primary-color
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-headings
+                    font-size: 1.875rem
+                    font-style: italic
+                    font-weight: 400
+                    line-height: 120%
+                    text-decoration-line: underline
+                    text-decoration-style: solid
+                    text-decoration-skip-ink: auto
+                    text-decoration-thickness: 2px
+                    text-underline-offset: auto
+                    text-underline-position: from-font
+                    background: transparent
+
+            .h2
+                position: absolute
+                top: 0px
+                color: $primary-color
+                font-feature-settings: 'liga' off, 'clig' off
+                font-family: $font-headings
+                font-size: 2.5rem
+                font-style: normal
+                font-weight: 400
+                line-height: 120%
+                text-align: center
+                span
+                    font-size: 1.875rem
+                    font-style: italic
+                    font-weight: 700
+                mark
+                    font-weight: 400
+                    font-style: italic
+                    text-decoration-line: underline
+                    text-decoration-style: solid
+                    text-decoration-skip-ink: auto
+                    text-decoration-thickness: 2px
+                    text-underline-offset: auto
+                    text-underline-position: from-font
+                    background: transparent
+
+            .p
+                color: $primary-color
+                font-feature-settings: 'liga' off, 'clig' off
+                font-family: $font-primary
+                font-size: 1.25rem
+                font-style: normal
+                font-weight: 400
+                line-height: 2.1875rem
+                position: absolute
+
+                &[data-id="0"]
+                    left: 18rem
+                    top: 11.38rem
+                    width: 42.25rem
+
+                &[data-id="1"]
+                    left: 48rem
+                    top: 88.88rem
+                    width: 27.4375rem
+
+                &[data-id="2"]
+                    left: 18rem
+                    top: calc(88.88rem + 53.38rem)
+                    width: 45.25rem
+
+                &[data-id="3"]
+                    left: 18rem
+                    top: 34.62rem
+                    width: 42.25rem
+
+                &[data-id="4"]
+                    left: 18rem
+                    top: 54.37rem
+                    width: 42.25rem
+
+                &[data-id="5"]
+                    left: 18rem
+                    top: 137rem
+                    width: 45.25rem
+
+                &[data-id="6"]
+                    left: 18rem
+                    top: 11.38rem
+                    width: 42.25rem
+
+                &[data-id="7"]
+                    left: 40rem
+                    top: 24.81rem
+                    width: 34.9375rem
+
+                &[data-id="8"]
+                    left: 40rem
+                    top: 102.12rem
+                    width: 27.625rem
+
+                &[data-id="9"]
+                    left: 11rem
+                    top: 11rem
+                    width: 56.875rem
+
+                &[data-id="10"]
+                    left: 11rem
+                    top: 17.625rem
+                    width: 56.875rem
+
+                &[data-id="11"]
+                    left: 18rem
+                    top: 80rem
+                    width: 42.125rem
+
+                &[data-id="12"]
+                    left: 18rem
+                    top: 91rem
+                    width: 42.125rem
+
+                &[data-id="13"]
+                    left: 18rem
+                    top: 8.4rem
+                    width: 42.25rem
+
+                &[data-id="14"]
+                    left: 18rem
+                    top: 88rem
+                    width: 42.25rem
+
+                &[data-id="15"]
+                    left: 18rem
+                    top: 126rem
+                    width: 42.25rem
+
+                &[data-id="16"]
+                    left: 18rem
+                    top: 143.5625rem
+                    width: 42.25rem
+
+            .end
+                position: absolute
+                width: 40.25rem
+                left: 19rem
+                top: 158.8rem
+
+                color: $primary-color
+                text-align: center
+                font-feature-settings: 'liga' off, 'clig' off
+                font-family: $font-headings
+                font-size: 2.5rem
+                font-style: normal
+                font-weight: 400
+                line-height: 120%
+
+                mark
+                    font-style: italic
+                    text-decoration-line: underline
+                    text-decoration-style: solid
+                    text-decoration-skip-ink: auto
+                    text-decoration-thickness: 2px
+                    text-underline-offset: auto
+                    text-underline-position: from-font
+                    background: transparent
+                    font-weight: 400
 
 
+            .quote
+                position: absolute
+                display: flex
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                width: 42.25rem
+                left: 18rem
+                svg
+                    position: relative
+                    margin-bottom: 2.19rem
+                blockquote
+                    position: relative
+                    color: $subheader-color
+                    text-align: center
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-headings
+                    font-size: 1.875rem
+                    font-style: italic
+                    font-weight: 400
+                    line-height: 187%
+                    margin-bottom: 0.75rem
+                    width: 100%
+                    &::before
+                        display: none
+                .author
+                    position: relative
+                    color: $author-color
+                    text-align: center
+                    font-feature-settings: 'liga' off, 'clig' off
+                    font-family: $font-primary
+                    font-size: 1.0625rem
+                    font-style: normal
+                    font-weight: 600
+                    line-height: 120%
+                    max-width: 20.25rem
+                    width: 100%
 
+                &[data-id="0"]
+                    top: 118rem
+                    blockquote                 
+                        max-width: 36.25rem
 
+                &[data-id="1"]
+                    top: 105rem
+                    blockquote
+                        max-width: 40.25rem
 
+            .line
+                position: absolute
 
+                &[data-id="0"]
+                    left: 39.375rem
+                    top: 32.0625rem
+                
+                &[data-id="1"]
+                    left: 33.6875rem
+                    top: 42.875rem
 
+                &[data-id="2"]
+                    left: 36.625rem
+                    top: calc(88.9375rem - 60.4375rem)
 
+                &[data-id="3"]
+                    left: 32.5625rem
+                    top: calc(145.1875rem - 60.4375rem)
 
+                &[data-id="4"]
+                    left: 39.375rem
+                    top: calc(217.5625rem - 60.4375rem)
 
+                &[data-id="5"]
+                    left: 39.375rem
+                    top: calc(233.375rem - 224.4375rem)
 
+                &[data-id="6"]
+                    left: 5.1875rem
+                    top: calc(244.0625rem - 224.4375rem)
 
+                &[data-id="7"]
+                    left: 39.375rem
+                    top: calc(290.5rem - 224.4375rem)
 
+                &[data-id="8"]
+                    left: 3.4375rem
+                    top: calc(306.625rem - 224.4375rem)
 
+                &[data-id="9"]
+                    left: 43.5rem
+                    top: calc(315rem - 224.4375rem)
 
+                &[data-id="10"]
+                    left: 19.125rem
+                    top: calc(338.0625rem - 224.4375rem)
 
+                &[data-id="11"]
+                    left: 39.375rem
+                    top: calc(373.9375rem - 224.4375rem)
 
+                &[data-id="12"]
+                    left: calc(-0.5rem - 4.75rem)
+                    top: calc(401.4375rem - 380.4375rem)
 
+                &[data-id="13"]
+                    left: 16.25rem
+                    top: calc(411.625rem - 380.4375rem)
 
+                &[data-id="14"]
+                    left: 39.625rem
+                    top: calc(415.0625rem - 380.4375rem)
 
+                &[data-id="15"]
+                    left: calc(-0.5rem - 0.5rem - 0.0625rem - 0.0625rem)
+                    top: calc(451.5rem - 380.4375rem)
 
+                &[data-id="16"]
+                    left: 39.375rem
+                    top: calc(539.625rem - 510.4375rem)
 
+                &[data-id="17"]
+                    left: 27.375rem
+                    top: calc(618.5rem - 510.4375rem)
 
+                &[data-id="18"]
+                    left: 39.375rem
+                    top: calc(683.625rem - 659.4375rem)
 
+                &[data-id="19"]
+                    left: 32.5625rem
+                    top: calc(697rem - 659.4375rem)
 
-
-
+                &[data-id="20"]
+                    left: 39.375rem
+                    top: calc(730.375rem - 659.4375rem)
