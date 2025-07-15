@@ -12,7 +12,6 @@ function addDataFloatToTextsAndPaths(groupSelector = '.lines_with_texts') {
     const texts = Array.from(group.children).filter(el => el.tagName === 'text');
     const paths = Array.from(group.children).filter(el => el.tagName === 'path');
 
-
     texts.forEach((el, i) => el.setAttribute('data-float', i));
     paths.forEach((el, i) => el.setAttribute('data-float', i));
   });
@@ -190,11 +189,6 @@ const animateChart1 = () => {
   const chart = document.querySelector('.chart[data-id="1"]');
   if (!chart) return;
 
-  const path = chart.querySelector('#chart1-path');
-
-  gsap.set(path, { drawSVG: "0%" });
-
-
   gsap.fromTo(chart,
     { opacity: 0 },
     {
@@ -211,7 +205,9 @@ const animateChart1 = () => {
   );
 
 
+  const path = chart.querySelector('#chart1-path');
 
+  gsap.set(path, { drawSVG: "0%" });
 
   gsap.to(path, {
     drawSVG: "100%",
@@ -225,10 +221,53 @@ const animateChart1 = () => {
     }
   });
 };
+
 const animateChart2 = () => {
-  // Реализуйте анимацию для второго графика
-  console.log("Animating Chart 2");
+  const chart = document.querySelector('.chart[data-id="2"]');
+  if (!chart) return;
+
+  gsap.set([`.art[data-id="27"], .art[data-id="28"], .art[data-id="29"]`], { opacity: 1 });
+
+  gsap.fromTo(chart,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: chart,
+        start: "top center",
+        onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
+        onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+      }
+    }
+  );
+
+  // Анимация SVG внутри chart__caption
+  const captions = chart.querySelectorAll('.chart__caption');
+  if (!captions) return;
+console.log(captions);
+  captions.forEach(caption => {
+      gsap.fromTo(caption,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: caption,
+            start: "top center",
+            onEnter: () => gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" }),
+            onLeaveBack: () => gsap.to(caption, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+          }
+        }
+      );
+  });
+
+
+
 }
+
 const animateChart3 = () => {
   const chart = document.querySelector('.chart[data-id="3"]');
   if (!chart) return;
@@ -328,16 +367,256 @@ const animateChart3 = () => {
 }
 
 const animateChart4 = () => {
-  // Реализуйте анимацию для четвертого графика
-  console.log("Animating Chart 4");
+  const chart = document.querySelector('.chart[data-id="4"]');
+  if (!chart) return;
+
+  gsap.fromTo(chart,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: chart,
+        start: "top center",
+        onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
+        onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+      }
+    }
+  );
 }
+
 const animateChart5 = () => {
-  // Реализуйте анимацию для пятого графика
-  console.log("Animating Chart 5");
+  const chart = document.querySelector('.chart[data-id="5"]');
+  if (!chart) return;
+
+  gsap.fromTo(chart,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: chart,
+        start: "top center",
+        onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
+        onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+      }
+    }
+  );
+
+
+
+  // Оригинальные пути делаем невидимыми (opacity: 0)
+  const svg = chart.querySelector('svg');
+  if (!svg) return;
+  const origPaths = svg.querySelectorAll('path');
+  origPaths.forEach(p => p.style.opacity = 0);
+
+  // Данные для секторов (проценты и цвета из оригинальных путей)
+  const pieData = [
+    { value: 43, color: '#42737B' },
+    { value: 41, color: '#D1A79C' },
+    { value: 8,  color: '#CCC1B7' },
+    { value: 4,  color: '#E3DCD6' },
+    { value: 4,  color: '#fff' }
+  ];
+  const pieStroke = '#3E3E3E';
+  const pieStrokeWidth = 0.5;
+  const cx = 220, cy = 216, r = 132; // центр и радиус
+
+  // Удаляем старые кастомные сектора если есть
+  const oldCustom = svg.querySelectorAll('.pie-animated-sector');
+  oldCustom.forEach(el => el.remove());
+
+  // Функция для генерации path сектора по углам
+  function describeArc(cx, cy, r, startAngle, endAngle) {
+
+    // Защита от NaN: если угол невалидный, возвращаем пустую дугу
+    if (isNaN(startAngle) || isNaN(endAngle)) {
+      return `M${cx},${cy} L${cx + r},${cy} Z`;
+    }
+    const rad = Math.PI / 180;
+    const x1 = cx + r * Math.cos(rad * startAngle);
+    const y1 = cy + r * Math.sin(rad * startAngle);
+    const x2 = cx + r * Math.cos(rad * endAngle);
+    const y2 = cy + r * Math.sin(rad * endAngle);
+    const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
+    return [
+      `M${cx},${cy}`,
+      `L${x1},${y1}`,
+      `A${r},${r} 0 ${largeArc} 1 ${x2},${y2}`,
+      'Z'
+    ].join(' ');
+  }
+
+  // Создаём кастомные сектора (paths)
+  let startAngle = -90;
+  const animatedSectors = [];
+  pieData.forEach((d, i) => {
+    const angle = d.value / 100 * 360;
+    const endAngle = startAngle + angle;
+    const pathStr = describeArc(cx, cy, r, startAngle, endAngle);
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', pathStr);
+    path.setAttribute('fill', d.color);
+    path.setAttribute('stroke', pieStroke);
+    path.setAttribute('stroke-width', pieStrokeWidth);
+    path.classList.add('pie-animated-sector');
+    path.style.opacity = 0;
+    svg.appendChild(path);
+    animatedSectors.push({ path, startAngle, endAngle });
+    startAngle = endAngle;
+  });
+
+  // Анимация: строго последовательная — каждый сектор и подпись строго друг за другом, с поддержкой ScrollTrigger
+  const textGroups = Array.from(svg.querySelectorAll('g'));
+  textGroups.forEach(g => gsap.set(g, { opacity: 0 }));
+
+  // Создаём timeline с scrub и ScrollTrigger
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: svg,
+      start: 'top center',
+      end: 'center center',
+      scrub: true,
+    }
+  });
+
+  // Для каждого сектора и подписи — строго последовательные шаги
+  animatedSectors.forEach((sector, i) => {
+    // Для каждого сектора создаём маску-дугу, которая "открывает" сектор
+    const maskId = `pie-mask-${i}`;
+    let mask = svg.querySelector(`#${maskId}`);
+    if (mask) mask.remove();
+    mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+    mask.setAttribute('id', maskId);
+    svg.appendChild(mask);
+
+    // В маске — белая дуга, которая "растёт" по углу
+    const maskArc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    maskArc.setAttribute('fill', '#fff');
+    mask.appendChild(maskArc);
+    sector.path.setAttribute('mask', `url(#${maskId})`);
+
+    gsap.set(sector.path, { opacity: 1 });
+    const angleObj = { drawAngle: 0 };
+    const angleDelta = Math.max(0, sector.endAngle - sector.startAngle);
+    // Сектор — строго после предыдущего
+    tl.to(angleObj, {
+      drawAngle: angleDelta,
+      duration: 0.7,
+      ease: 'power1.inOut',
+      onUpdate: function() {
+        const curAngle = sector.startAngle + (angleObj.drawAngle || 0);
+        if (isNaN(curAngle)) return;
+        maskArc.setAttribute('d', describeArc(cx, cy, r + 1, sector.startAngle, curAngle));
+      },
+      onStart: function() {
+        sector.path.style.opacity = 1;
+      }
+    });
+    // Подпись — одновременно с сектором
+    if (textGroups[i]) {
+      tl.to(textGroups[i], {
+        opacity: 1,
+        duration: 0.3,
+        ease: 'power1.inOut',
+      }, '<'); // запускать одновременно с сектором
+    }
+  });
 }
+
 const animateChart6 = () => {
-  // Реализуйте анимацию для шестого графика
-  console.log("Animating Chart 6");
+  const chart = document.querySelector('.chart[data-id="6"]');
+  if (!chart) return;
+
+  gsap.set([`.art[data-id="52"], .art[data-id="53"], .art[data-id="54"]`], { opacity: 1 });
+
+  gsap.fromTo(chart,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: chart,
+        start: "top center",
+        onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
+        onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+      }
+    }
+  );
+
+
+  const captions = chart.querySelectorAll('.chart__caption');
+  if (!captions) return;
+
+captions.forEach(caption => {
+  const valueEl = caption.querySelector('.chart__caption_value');
+  const finalValue = parseInt(valueEl.textContent, 10);
+
+  gsap.fromTo(caption,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: caption,
+        start: "top center",
+        onEnter: () => {
+          gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
+          gsap.fromTo(valueEl, 
+            { innerText: 0 }, 
+            {
+              innerText: finalValue,
+              duration: 1,
+              ease: "power1.inOut",
+              snap: { innerText: 1 },
+              onUpdate: function() {
+                valueEl.textContent = Math.round(this.targets()[0].innerText) + '%';
+              }
+            }
+          );
+        },
+        onLeaveBack: () => {
+          gsap.to(caption, { opacity: 0, duration: 0.5, ease: "power1.inOut" });
+          // valueEl.textContent = '0%';
+        }
+      }
+    }
+  );
+});
+
+
+  const captions2 = chart.querySelectorAll( `.chart6-sp1, .chart6-sp2, .chart6-sp3`);
+  if (!captions2) return;
+
+ 
+    captions2.forEach(caption2 => {
+      gsap.fromTo(caption2,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: caption2,
+            start: "top center",
+            onEnter: () => {
+              // gsap.killTweensOf(caption2); // Очищаем предыдущие анимации
+              gsap.to(caption2, { opacity: 1, duration: 1, ease: "power1.inOut" });
+            },
+            onLeaveBack: () => {
+              // gsap.killTweensOf(caption2); 
+              gsap.to(caption2, { opacity: 0, duration: 0.5, ease: "power1.inOut" });
+            }
+          }
+        }
+      );
+  });
+
 }
 
 

@@ -36,7 +36,7 @@ const animateSinglePersons = (ids) => {
 
     el.style.transformOrigin = `${originX}% 0%`;
 
-    gsap.set(el, { scale: 1.5, opacity: 0, y: 0 });
+    gsap.set(el, { scale: 1.25, opacity: 0, y: 0 });
 
     gsap.to(el, {
       scale: 1,
