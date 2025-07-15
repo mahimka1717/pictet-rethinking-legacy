@@ -12,8 +12,8 @@
 .art[data-id="2"]
   top: 425px
   left: 60px
-  width: 4.89231rem
-  height: 5.50413rem
+  width: 107px
+  height: 85px
 
 .art[data-id="3"]
   top: 658px
@@ -30,8 +30,8 @@
 .art[data-id="5"]
   top: 864px
   left: 509px
-  width: 3.875rem
-  height: 5.625rem
+  width: 72px
+  height: 91px
 
 .art-group[data-id="1"]
   position: absolute
@@ -83,6 +83,9 @@
   position: absolute
   top: 88.0rem
   left: -3rem
+  width: 28rem
+  height: 30rem
+  clip-path: ellipse(100% 65% at 50% 50%)
 
   .art[data-id="12"]
     top: 0rem
@@ -96,34 +99,37 @@
     width: 3.80625rem
     height: 5.00825rem
 
-  .art[data-id="14"]
-    top: 273px
-    left: 71px
-    width: 2.25394rem
-    height: 3.61869rem
+.art[data-id="14"]
+  top: calc(273px + 88rem)
+  left: calc(-19px - 3rem)
+  width: 115px
+  height: 76px
 
-  .art[data-id="15"]
-    top: 348px
-    left: 80px
-    width: 6.9375rem
-    height: 6.25rem
+.art[data-id="15"]
+  top: calc(348px + 88rem)
+  left: calc(80px - 3rem)
+  width: 6.9375rem
+  height: 6.25rem
 
-  .art[data-id="16"]
-    top: 448px
-    left: 349px
-    width: 4.05406rem
-    height: 5.6875rem
+.art[data-id="16"]
+  top: calc(448px + 88rem)
+  left: calc(349px - 3rem)
+  width: 4.05406rem
+  height: 5.6875rem
 
-  .art[data-id="17"]
-    top: 517px
-    left: 73px
-    width: 16.49088rem
-    height: 11.5625rem
+.art[data-id="17"]
+  top: calc(517px + 88rem)
+  left: calc(73px - 3rem)
+  width: 16.49088rem
+  height: 11.5625rem
 
 .art-group[data-id="3"]
   position: absolute
   top: 108.62rem
   left: 56.38rem
+  width: 360px
+  height: 280px
+  clip-path: ellipse(100% 75% at 50% 50%)
 
   .art[data-id="18"]
     top: 0rem
@@ -132,25 +138,25 @@
     height: 95px
     // aspect-ratio: 63.15/91.00
 
-  .art[data-id="19"]
-    top: 136px
-    left: 0rem
-    width: 113px
-    height: 57px
-    // aspect-ratio: 66.78/52.17
-
-  .art[data-id="20"]
-    top: 166px
-    left: 91px
-    width: 1.13731rem
-    height: 4.26625rem
-    // aspect-ratio: 18.20/68.26
-
   .art[data-id="21"]
     top: 34px
     left: 48px
     width: 316px
     height: 219px
+
+.art[data-id="19"]
+  top: calc(136px + 108.62rem)
+  left: calc(0rem + 56.38rem)
+  width: 113px
+  height: 57px
+  // aspect-ratio: 66.78/52.17
+
+.art[data-id="20"]
+  top: calc(166px + 108.62rem)
+  left: calc(91px + 56.38rem)
+  width: 1.13731rem
+  height: 4.26625rem
+  // aspect-ratio: 18.20/68.26
 
 .art-group[data-id="4"]
   position: absolute
@@ -158,9 +164,11 @@
   left: 2.56rem
   z-index: 1
 
+
+
   .crack
     position: absolute
-    top: -125.08px
+    top: 134px
     left: 129.15px
  
   .art[data-id="22"]
@@ -168,6 +176,14 @@
     top: 12px
     width: 246px
     height: 254px
+    // overflow: hidden
+    clip-path: ellipse(100% 75% at 50% 50%)
+    img
+      position: relative
+      display: block
+      width: 100%
+      height: 100%
+      // object-fit: cover
 
   .art[data-id="23"]
     left: 406.14px
@@ -186,12 +202,24 @@
     top: 0px
     width: 145px
     height: 279px
+    clip-path: ellipse(100% 75% at 50% 50%)
+    img
+      position: relative
+      width: 100%
+      height: 100%
+      object-fit: cover
 
   .art[data-id="26"]
     left: 992px
     top: 40px
     width: 126px
     height: 218px
+    clip-path: ellipse(100% 75% at 50% 50%)
+    img
+      position: relative
+      width: 100%
+      height: 100%
+      object-fit: cover
 
 .chart__svg[data-id="2"]
   position: relative
@@ -210,12 +238,14 @@
     top: 210px
     width: 171.93px
     height: 178.07px
+    transform-origin: center bottom
 
   .art[data-id="29"]
     left: 63.98px
     top: 0px
     width: 191.02px
     height: 259.97px
+    transform-origin: center bottom
 
   .art[data-id="30"]
     left: 220px
@@ -240,6 +270,7 @@
     top: 235px
     width: 174px
     height: 175px
+    z-index: 1
 
   .art[data-id="54"]
     left: 78px
@@ -263,24 +294,43 @@
     top: 87px
     width: 85px
     height: 90px
+    z-index: 1
 
   .art[data-id="33"]
     left: 0px
     top: 27px
     width: 195.44px
     height: 155.65px
+    clip-path: ellipse(75% 50% at 50% 50%)
+    img
+      position: relative
+      display: block
+      width: 100%
+      height: 100%
 
   .art[data-id="34"]
     left: 145px
     top: 136px
     width: 195px
     height: 130px
+    clip-path: ellipse(75% 50% at 50% 50%)
+    img
+      position: relative
+      display: block
+      width: 100%
+      height: 100%
 
   .art[data-id="35"]
     left: 289px
     top: 232px
     width: 196px
     height: 122px
+    clip-path: ellipse(75% 50% at 50% 50%)
+    img
+      position: relative
+      display: block
+      width: 100%
+      height: 100%
 
 .art-group[data-id="6"]
   position: absolute
@@ -323,43 +373,54 @@
     top: 0px
     width: 207px
     height: 112px
+    display: block
 
   .art[data-id="41"]
     left: 212.96px
     top: 168.03px
     width: 213px
     height: 168px
+    display: block
 
   .art[data-id="42"]
     left: 0px
     top: 477px
     width: 165px
     height: 177px
+    display: block
 
 
 
 .art-group[data-id="8"]
+  // width: 100%
   position: absolute
   top: 119rem
   left: 57.8rem
+  width: 360px
+  height: 280px
+  clip-path: ellipse(100% 75% at 50% 50%)
+
 
   .art[data-id="43"]
     left: 153px
     top: 0px
     width: 76px
     height: 86px
+    display: block
 
   .art[data-id="44"]
     left: 37px
     top: 6px
     width: 310px
     height: 280px
+    display: block
 
   .art[data-id="45"]
     left: 0px
     top: 186px
     width: 79px
     height: 95px
+    display: block
 
 
 
@@ -391,6 +452,8 @@
     top: 374px
     width: 199px
     height: 149px
+
+
 
 .art[data-id="51"]
   top: 141.62rem
