@@ -216,7 +216,7 @@ const animateChart1 = () => {
     scrollTrigger: {
       trigger: chart,
       start: "top center",
-      end: "bottom center",
+      end: "center center",
       scrub: true
     }
   });
@@ -243,26 +243,48 @@ const animateChart2 = () => {
     }
   );
 
-  // Анимация SVG внутри chart__caption
+  // Анимация SVG внутри chart__caption (без враппера)
   const captions = chart.querySelectorAll('.chart__caption');
   if (!captions) return;
-console.log(captions);
+
   captions.forEach(caption => {
-      gsap.fromTo(caption,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 1,
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: caption,
-            start: "top center",
-            onEnter: () => gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" }),
-            onLeaveBack: () => gsap.to(caption, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+    const valueEl = caption.querySelector('.chart__caption_value');
+    const finalValue = parseInt(valueEl.textContent, 10);
+
+    gsap.fromTo(caption,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: caption,
+          start: "top 65%",
+          onEnter: () => {
+            gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
+            gsap.fromTo(valueEl, 
+              { innerText: 0 }, 
+              {
+                innerText: finalValue,
+                duration: 1,
+                ease: "power1.inOut",
+                snap: { innerText: 1 },
+                onUpdate: function() {
+                  valueEl.textContent = Math.round(this.targets()[0].innerText) + '%';
+                }
+              }
+            );
+          },
+          onLeaveBack: () => {
+            gsap.to(caption, { opacity: 0, duration: 0.5, ease: "power1.inOut" });
+            // valueEl.textContent = '0%';
           }
         }
-      );
+      }
+    );
   });
+
+
 
 
 
@@ -564,7 +586,7 @@ captions.forEach(caption => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: caption,
-        start: "top center",
+        start: "top 65%",
         onEnter: () => {
           gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
           gsap.fromTo(valueEl, 
@@ -618,6 +640,7 @@ captions.forEach(caption => {
   });
 
 }
+
 
 
 export const animateCharts = () => {

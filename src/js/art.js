@@ -36,7 +36,17 @@ const animateSinglePersons = (ids) => {
 
     el.style.transformOrigin = `${originX}% 0%`;
 
-    gsap.set(el, { scale: 1.25, opacity: 0, y: 0 });
+    gsap.set(el, { scale: 1, opacity: 0, y: 0 });
+
+    let start = "top center"
+    let end = "bottom center"
+
+    if(id==="2"){
+        start = "top 75%";
+        end = "bottom 75%";
+    }
+
+    console.log(id)
 
     gsap.to(el, {
       scale: 1,
@@ -45,8 +55,8 @@ const animateSinglePersons = (ids) => {
       ease: "power3.out",
       scrollTrigger: {
         trigger: el,
-        start: "top center",
-        end: "bottom center",
+        start: start,
+        end: end,
         scrub: true,
         // markers: true // для отладки
       }

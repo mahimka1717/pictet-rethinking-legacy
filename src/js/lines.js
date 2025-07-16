@@ -31,6 +31,9 @@ export const animateLines = () => {
     let point = "center";
     if(i===13) point = "center-=50";
 
+    if(i===8 || i===9 || i===10) {
+      point = "65%";
+    }
 
     ScrollTrigger.create({
         trigger: lines[i],

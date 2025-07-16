@@ -20,6 +20,13 @@
                 text-align: center
                 max-width: 42rem
 
+            .chart__svg
+                .chart_2_shadow
+                    position: absolute
+                    top: 36rem
+                    left: 0rem
+          
+
             .chart__caption
                 display: flex
                 position: absolute
@@ -43,6 +50,8 @@
                     font-weight: 400
                     line-height: 100%
                     margin-right: 0.62rem
+                    width: 260px
+                    text-align: right
                 div
                     padding-top: 0.32rem
                     .chart__caption_text
@@ -116,7 +125,7 @@
                 text-align: left
 
     &[data-id="6"]
-        top: 28.625rem
+        top: calc(28.625rem + 176px)
         left: 26rem
         .chart__wrapper
             display: flex
