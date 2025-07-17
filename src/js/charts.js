@@ -55,29 +55,76 @@ function swingElement(selector, options = {}) {
   animate();
 }
 
-// Верхний предмет повторяет угол центрального + свой swing
 function swingTopWithFollow(centerSelector, topSelector) {
   const center = document.querySelector(centerSelector);
   const top = document.querySelector(topSelector);
   if (!center || !top) return;
 
-  top.style.transformOrigin = "center bottom";
+  // Сбросить transform и transformOrigin
+  gsap.set(top, { clearProps: "all" });
 
-  const animate = () => {
-    // Получаем текущий угол центрального
-    const centerAngle = gsap.getProperty(center, "rotate") || 0;
-    // Добавляем свой swing
-    const extra = gsap.utils.random(-5, 5);
+  // Координаты "точки привязки" в системе center
+  const anchorCenter = { x: 172 / 2, y: 35 };
+  // Координаты "точки привязки" в системе top
+  const anchorTop = { x: 35, y: 260 };
 
-    gsap.to(top, {
-      rotate: centerAngle + extra,
-      duration: gsap.utils.random(1.5, 3),
-      ease: "sine.inOut",
-      onComplete: animate
+    // Устанавливаем transform-origin в точку привязки
+  top.style.transformOrigin = `${anchorTop.x}px ${anchorTop.y}px`;
+
+  function updatePosition() {
+    // Получаем transform center (только rotate)
+    const style = window.getComputedStyle(center);
+    const matrix = style.transform !== "none" ? new DOMMatrix(style.transform) : null;
+
+    // Получаем bbox center и top
+    const centerRect = center.getBoundingClientRect();
+    const topRect = top.getBoundingClientRect();
+    const parentRect = top.parentElement.getBoundingClientRect();
+
+    // Преобразуем anchorCenter с учётом поворота
+    let anchorX = anchorCenter.x, anchorY = anchorCenter.y;
+    let centerAngle = 0;
+    if (matrix) {
+      // Вращаем anchorCenter относительно transform-origin (center bottom)
+      const originX = center.offsetWidth / 2;
+      const originY = center.offsetHeight;
+      const dx = anchorCenter.x - originX;
+      const dy = anchorCenter.y - originY;
+      anchorX = originX + dx * matrix.a + dy * matrix.c;
+      anchorY = originY + dx * matrix.b + dy * matrix.d;
+            // Получаем угол поворота нижней фигуры (в радианах)
+      centerAngle = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
+    }
+
+    // Абсолютные координаты привязки на экране
+    const absAnchorX = centerRect.left + anchorX;
+    const absAnchorY = centerRect.top + anchorY;
+
+    // Смещение top так, чтобы его anchorTop совпал с absAnchor
+    const topAbsAnchorX = topRect.left + anchorTop.x;
+    const topAbsAnchorY = topRect.top + anchorTop.y;
+
+    const dx = absAnchorX - topAbsAnchorX;
+    const dy = 0//absAnchorY - topAbsAnchorY;
+
+    // Текущие x/y top относительно родителя
+    const curX = parseFloat(top.style.left || 0);
+    const curY = parseFloat(top.style.top || 0);
+
+    gsap.set(top, {
+      x: "+=" + dx,
+      y: "+=" + dy,
+      rotate: -centerAngle / 2
+      // duration: 0.2,
+      // ease: "sine.inOut"
     });
-  };
+  }
 
-  animate();
+  function tick() {
+    updatePosition();
+    requestAnimationFrame(tick);
+  }
+  tick();
 }
 
 function floatTextAndLine(groupSelector = '.lines_with_texts') {
@@ -286,7 +333,8 @@ const animateChart2 = () => {
 
 
 
-
+  swingElement('.art[data-id="28"]', { angle: 5, origin: "center bottom" });
+  swingTopWithFollow('.art[data-id="28"]', '.art[data-id="29"]');
 
 }
 
@@ -648,6 +696,13 @@ const animateChart5 = () => {
 }
 
 const animateChart6 = () => {
+  
+  
+  floatRandomly('.art[data-id="52"]');
+  floatRandomly('.art[data-id="53"]');
+  floatRandomly('.art[data-id="54"]');
+  
+  
   const chart = document.querySelector('.chart[data-id="6"]');
   if (!chart) return;
 
@@ -743,14 +798,11 @@ captions.forEach(caption => {
 
 export const animateCharts = () => {
 
-    swingElement('.art[data-id="28"]', { angle: 5, origin: "center bottom" });
-    swingTopWithFollow('.art[data-id="28"]', '.art[data-id="29"]');
 
 
 
-    floatRandomly('.art[data-id="52"]');
-    floatRandomly('.art[data-id="53"]');
-    floatRandomly('.art[data-id="54"]');
+
+
 
     const charts = document.querySelectorAll('.chart');
     gsap.set(charts, { opacity: 0 });

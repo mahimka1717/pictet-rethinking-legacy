@@ -234,19 +234,9 @@ const animateArt3 = () => {
 
 const animateArt4 = () => {
 
-    gsap.set(".crack", { opacity: 0 });
-
-    animateSinglePersons([
-        "23", 
-        "24", 
-    ]);
-
-    animateSingleBuilding([
-        "22",
-        "25", 
-        "26"
-    ]);
-
+    const art23 = document.querySelector(`.art[data-id="23"]`);
+    const art24 = document.querySelector(`.art[data-id="24"]`);
+    gsap.set(".crack", { opacity: 0 }); 
 
     gsap.to(".crack", {
         opacity: 1,
@@ -255,7 +245,6 @@ const animateArt4 = () => {
         scrollTrigger: {
             trigger: ".crack",
             start: "top center",
-
             scrub: false,
             toggleActions: "play reverse play reverse",
  
@@ -272,6 +261,21 @@ const animateArt4 = () => {
 
         }
     });
+
+    gsap.from(art24, {
+        x: -15,
+        y: -15,
+        ease: "power1.inOut",
+        scrollTrigger: {
+            trigger: ".crack",
+            start: "top center",
+            end: "bottom center",
+            scrub: true,
+
+        }
+    });
+
+
 }
 
 const animateArt5 = () => {
@@ -286,8 +290,8 @@ const animateArt5 = () => {
     let art32 = document.querySelector(`.art[data-id="32"]`);
 
     gsap.set(art31, { y: "234px" });
-    // gsap.set(art31, { opacity: 0 });
-    // gsap.set(art32, { opacity: 0 });
+    gsap.set(art31, { opacity: 0 });
+    gsap.set(art32, { opacity: 0 });
     gsap.to(art31, {
         y: "0%",
         ease: "power3.out",
@@ -384,28 +388,20 @@ const animateArt7 = () => {
     ];
 
     // Установим начальные значения для всех монет
-    gsap.set(els, { opacity: 1 });
+    // gsap.set(els, { opacity: 1 });
 
     // Для каждой монеты — индивидуальная анимация падения с параллаксом и "листопадом"
     gsap.fromTo(
         `.art[data-id='40']`,
         {
-            y: 0,
-            x: -80,
             rotateZ: -20,
             rotateY: 10,
             rotateX: -15,
-            scale: 1.1,
-            opacity: 0.85
         },
         {
-            y: 120,
-            x: 60,
             rotateZ: 120,
             rotateY: -30,
             rotateX: 25,
-            scale: 1.05,
-            opacity: 1,
             ease: "power1.inOut",
             scrollTrigger: {
                 trigger: `.art-group[data-id="7"]`,
@@ -420,22 +416,14 @@ const animateArt7 = () => {
     gsap.fromTo(
         `.art[data-id='41']`,
         {
-            y: 0,
-            x: 100,
-            rotateZ: 40,
+            rotateZ: -40,
             rotateY: -15,
             rotateX: 20,
-            scale: 0.95,
-            opacity: 0.8
         },
         {
-            y: 150,
-            x: -90,
-            rotateZ: 320,
+            rotateZ: 170,
             rotateY: 35,
             rotateX: -30,
-            scale: 1.15,
-            opacity: 1,
             ease: "power1.inOut",
             scrollTrigger: {
                 trigger: `.art-group[data-id="7"]`,
@@ -449,22 +437,14 @@ const animateArt7 = () => {
     gsap.fromTo(
         `.art[data-id='42']`,
         {
-            y: 0,
-            x: 40,
             rotateZ: -60,
             rotateY: 25,
             rotateX: 10,
-            scale: 1.2,
-            opacity: 0.9
         },
         {
-            y: 120,
-            x: 120,
             rotateZ: 200,
             rotateY: -40,
             rotateX: 40,
-            scale: 1.05,
-            opacity: 1,
             ease: "power1.inOut",
             scrollTrigger: {
                 trigger: `.art-group[data-id="7"]`,
@@ -562,18 +542,18 @@ const animateArt10 = () => {
 
 export const animateArts = () => {
 
-    animateSinglePersons(ids);
+    // animateSinglePersons(ids);
 
-    animateArt1(); 
-    animateArt2();
-    animateArt3();
+    // animateArt1(); 
+    // animateArt2();
+    // animateArt3();
     animateArt4();
     animateArt5();
-    animateArt6();
+    // animateArt6();
     animateArt7();
-    animateArt8();
-    animateArt9();
-    animateArt10(); 
+    // animateArt8();
+    // animateArt9();
+    // animateArt10(); 
  
 };
 

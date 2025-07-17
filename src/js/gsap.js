@@ -197,7 +197,7 @@ const animateText = () => {
         gsap.killTweensOf(el); // Убиваем предыдущие анимации, если есть  
         gsap.to(el, {
             opacity: 1,
-            duration: 1.25,
+            duration: 1.5,
             ease: 'power2.out'
         });
         },
@@ -245,7 +245,7 @@ export const initGSAP = () => {
         animateText();
         animateCharts();
         animateLines();
-        // animateArts();
+        animateArts();
         animateQuote();
 
         // Надёжный запуск animateHeaders после полной загрузки шрифтов и layout
