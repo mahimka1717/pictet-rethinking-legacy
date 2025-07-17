@@ -309,6 +309,8 @@ const animateChart3 = () => {
     }
   );
 
+  const svg = chart.querySelector('svg');
+  console.log(svg)
   // Получаем пути и value (текстовые поля)
   const paths = chart.querySelectorAll('#chart3-paths path');
   const values = chart.querySelectorAll('#chart3-values text tspan');
@@ -353,7 +355,7 @@ const animateChart3 = () => {
       }
     }
 
-    const startX = pathEndX + 20;
+    const startX = pathEndX + 10;
     const endX = valueX;
     value.setAttribute('x', startX);
     value.textContent = '0%';
@@ -364,14 +366,17 @@ const animateChart3 = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: chart,
-        start: `top+=${50} center`,
-        end: 'center center',
+        endTrigger: chart,
+        start: `top+=${i * 20} center`,
+        end: `center+=${i * 20} center`,
         scrub: true,
+
       }
     });
+
     tl.to({}, {
       duration: 1,
-      ease: 'power1.out',
+      ease: 'linear',
       onUpdate: function() {
         const prog = this.progress();
         const curX = startX + (endX - startX) * prog;
@@ -379,6 +384,9 @@ const animateChart3 = () => {
         const val = Math.round(targetValue * prog);
         value.textContent = val + '%';
         gsap.set(path, { scaleX: prog });
+
+
+
       },
       onComplete: function() {
         value.setAttribute('x', endX);
@@ -406,6 +414,119 @@ const animateChart4 = () => {
       }
     }
   );
+
+  const svg = chart.querySelector('svg');
+  if (!svg) return;
+  const group = svg.querySelector('.lines_with_texts');
+  if (!group) return;
+
+  const texts = Array.from(group.querySelectorAll('text'));
+  const paths = Array.from(group.querySelectorAll('path'));
+
+  // 1. Центр SVG
+  let centerX = 0, centerY = 0;
+  if (svg.viewBox && svg.viewBox.baseVal) {
+    centerX = svg.viewBox.baseVal.x + svg.viewBox.baseVal.width / 2;
+    centerY = svg.viewBox.baseVal.y + svg.viewBox.baseVal.height / 2;
+  } else {
+    const bbox = svg.getBBox();
+    centerX = bbox.x + bbox.width / 2;
+    centerY = bbox.y + bbox.height / 2;
+  }
+
+  console.log(`Center of SVG: (${centerX}, ${centerY})`);
+
+  // 2. Сохраняем исходные позиции текстов и линий
+  const originalTextPos = texts.map(t => ({
+    x: t.getAttribute('x') ? parseFloat(t.getAttribute('x')) : t.getBBox().x + t.getBBox().width / 2,
+    y: t.getAttribute('y') ? parseFloat(t.getAttribute('y')) : t.getBBox().y + t.getBBox().height / 2
+  }));
+  const originalPathD = paths.map(p => p.getAttribute('d'));
+
+  // 3. Ставим все тексты в центр SVG
+  // texts.forEach(t => {
+  //   t.setAttribute('x', centerX);
+  //   t.setAttribute('y', centerY);
+  // });
+
+  // // 4. Рисуем все линии из исходной точки к центру
+  // paths.forEach((p, i) => {
+  //   // Определяем начальную точку из d
+  //   let d = p.getAttribute('d');
+  //   let match = d.match(/M\s*([\d.]+)[ ,]([\d.]+)/);
+  //   let x0 = centerX, y0 = centerY;
+  //   if (match) {
+  //     x0 = parseFloat(match[1]);
+  //     y0 = parseFloat(match[2]);
+  //   }
+  //   p.setAttribute('d', `M${x0},${y0} L${centerX},${centerY}`);
+  // });
+
+  // // 5. Скрываем все тексты и линии
+  // gsap.set([texts, paths], { opacity: 0 });
+  gsap.set(svg, { opacity: 0 });
+
+  // // 6. Анимация появления по очереди
+  // gsap.to([texts, paths], {
+  //   opacity: 1,
+  //   stagger: 0.12,
+  //   duration: 0.5,
+  //   ease: "power1.inOut",
+  //   onComplete: () => {
+  //     // 7. Возвращаем тексты и линии на исходные места
+  //     texts.forEach((t, i) => {
+  //       gsap.to(t, {
+  //         x: originalTextPos[i].x,
+  //         y: originalTextPos[i].y,
+  //         duration: 0.7,
+  //         ease: "power2.inOut"
+  //       });
+  //     });
+  //     paths.forEach((p, i) => {
+  //       gsap.to({}, {
+  //         duration: 0.7,
+  //         onUpdate: function() {
+  //           // Плавно интерполируем d
+  //           // Можно просто вернуть d, если не нужна интерполяция
+  //           p.setAttribute('d', originalPathD[i]);
+  //         },
+  //         onComplete: () => {
+  //           // После возврата — запускаем float
+  //           addDataFloatToTextsAndPaths('.lines_with_texts');
+  //           floatTextAndLine('.lines_with_texts');
+  //         }
+  //       });
+  //     });
+  //   }
+  // });
+
+
+
+
+
+
+  gsap.fromTo(svg,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: svg,
+        start: "top center",
+        onEnter: () => {
+          gsap.to(svg, { opacity: 1, duration: 1, ease: "power1.inOut" });
+          // AnimationTimeline()
+        },
+        onLeaveBack: () => {
+          gsap.to(svg, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
+        }
+      }
+    }
+  );
+
+
+
 }
 
 const animateChart5 = () => {
@@ -499,8 +620,8 @@ const animateChart5 = () => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: svg,
-      start: 'top center',
-      end: 'center center',
+      start: 'top 60%',
+      end: 'center 50%',
       scrub: true,
     }
   });
@@ -528,7 +649,7 @@ const animateChart5 = () => {
     tl.to(angleObj, {
       drawAngle: angleDelta,
       duration: 0.7,
-      ease: 'power1.inOut',
+      ease: 'linear',
       onUpdate: function() {
         const curAngle = sector.startAngle + (angleObj.drawAngle || 0);
         if (isNaN(curAngle)) return;
@@ -648,8 +769,7 @@ export const animateCharts = () => {
     swingElement('.art[data-id="28"]', { angle: 5, origin: "center bottom" });
     swingTopWithFollow('.art[data-id="28"]', '.art[data-id="29"]');
 
-    addDataFloatToTextsAndPaths('.lines_with_texts');
-    floatTextAndLine('.lines_with_texts');
+
 
     floatRandomly('.art[data-id="52"]');
     floatRandomly('.art[data-id="53"]');

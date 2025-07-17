@@ -1,9 +1,12 @@
+import { smoother } from './gsap';
+
+
 export function initNavigation() {
   const navItems = document.querySelectorAll('.nav__item');
-  const chapters = document.querySelectorAll('.chapter');
   
   // Проверяем начальное состояние навигации
   function checkInitialNavState() {
+    // console.log('[nav] checkInitialNavState');
     const viewportMiddle = window.scrollY + window.innerHeight / 2;
     const firstChapter = document.querySelector('.chapter[data-id="1"]');
     const nav = document.querySelector('.nav');
@@ -25,7 +28,8 @@ export function initNavigation() {
   checkInitialNavState();
   
   // Функция для плавного скролла к элементу
-  function scrollToChapter(chapterIndex) {
+  function scrollToChapter(chapterIndex, onScrollEnd) {
+    // console.log('[nav] scrollToChapter', chapterIndex);
     const targetChapter = document.querySelector(`.chapter[data-id="${chapterIndex}"]`);
     if (targetChapter) {
       // Получаем позицию элемента относительно документа
@@ -35,11 +39,14 @@ export function initNavigation() {
         top: targetPosition,
         behavior: 'smooth'
       });
+    } else if (typeof onScrollEnd === 'function') {
+      onScrollEnd();
     }
   }
   
   // Функция для обновления активного состояния навигации
   function updateActiveNav(activeIndex) {
+    // console.log('[nav] updateActiveNav', activeIndex);
     navItems.forEach((item, index) => {
       item.classList.toggle('nav__item--active', index === activeIndex - 1);
     });
@@ -48,16 +55,19 @@ export function initNavigation() {
   // Обработчики кликов на элементы навигации
   navItems.forEach((item, index) => {
     item.addEventListener('click', () => {
+      // console.log('[nav] navItem click', index);
       const chapterIndex = index + 1; // +1 потому что первая кнопка ведет на chapter 1
-      scrollToChapter(chapterIndex);
+      scrollToChapter(chapterIndex, handleScroll);
       // Убираем немедленную активацию - пусть handleScroll сам определит активную кнопку
     });
   });
   
   // Отслеживание скролла для автоматического обновления активного элемента
   function handleScroll() {
-    const viewportMiddle = window.scrollY + window.innerHeight / 2; // Середина вьюпорта
-    const viewportBottom = window.scrollY + window.innerHeight; // Низ вьюпорта
+    // console.log('[nav] handleScroll');
+    const scrollY = window.scrollY;
+    const viewportMiddle = scrollY + window.innerHeight / 2; // Середина вьюпорта
+    const viewportBottom = scrollY + window.innerHeight; // Низ вьюпорта
     let activeChapterIndex = 0;
     
     // Проверяем позицию статьи и первой главы для скрытия/показа навигации
@@ -86,19 +96,22 @@ export function initNavigation() {
       }
     }
     
-    // Проходим по всем главам от 1 до 5 и находим последнюю пройденную
+    // Находим главу, пересекающую центр экрана
+    activeChapterIndex = 0;
     for (let i = 1; i <= 5; i++) {
       const chapter = document.querySelector(`.chapter[data-id="${i}"]`);
       if (chapter) {
         const rect = chapter.getBoundingClientRect();
         const chapterTop = window.pageYOffset + rect.top;
-        
-        // Если верх секции прошел середину вьюпорта, запоминаем её как активную
-        if (viewportMiddle >= chapterTop) {
+        const chapterBottom = window.pageYOffset + rect.bottom;
+        if (viewportMiddle >= chapterTop && viewportMiddle < chapterBottom) {
           activeChapterIndex = i;
+          break; // нашли — выходим из цикла
         }
       }
     }
+
+    // console.log(activeChapterIndex)
     
     // Обновляем активное состояние
     if (activeChapterIndex > 0) {
@@ -109,14 +122,27 @@ export function initNavigation() {
         item.classList.remove('nav__item--active');
       });
     }
+    // console.log('[nav] activeChapterIndex', activeChapterIndex);
   }
   
-  // Добавляем обработчик скролла с троттлингом
-  let scrollTimer;
-  window.addEventListener('scroll', () => {
-    if (scrollTimer) {
-      clearTimeout(scrollTimer);
+  
+
+  if(smoother) {
+
+
+  // Добавьте этот блок для постоянного отслеживания скролла
+  let lastScroll = -1;
+  function rafScrollWatcher() {
+    const y = smoother.scrollTop();
+    if (y !== lastScroll) {
+      lastScroll = y;
+      handleScroll();
     }
-    scrollTimer = setTimeout(handleScroll, 1);
-  });
+    requestAnimationFrame(rafScrollWatcher);
+  }
+  rafScrollWatcher();
+
+  }else{
+    window.addEventListener('scroll', handleScroll);
+  }
 }

@@ -46,8 +46,6 @@ const animateSinglePersons = (ids) => {
         end = "bottom 75%";
     }
 
-    console.log(id)
-
     gsap.to(el, {
       scale: 1,
       opacity: 1,

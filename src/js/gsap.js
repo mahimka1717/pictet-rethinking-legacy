@@ -7,6 +7,7 @@ import { animateLines } from "./lines";
 import { animateHeaders } from "./headers";
 import { animateArts } from "./art";
 import { animateQuote } from "./quote";
+import { initNavigation } from "./nav.js";
 
 export let smoother;
 
@@ -16,8 +17,11 @@ const xl = 1440;
 const md = 740;
 let resizeTimer;
 
-
+// smoother
 const createScrollSmoother = () => {
+    
+    createSmoothScrollStructure();
+    
     if (smoother) {
         smoother.kill();
     }
@@ -28,11 +32,7 @@ const createScrollSmoother = () => {
     // Для планшетов отключаем эффекты у определенных элементов
     if (isTablet) {
         // Находим элементы, которые НЕ должны анимироваться на планшетах
-        const elementsToDisable = document.querySelectorAll([
-            '.img-6',   
-            `.video-3-wrapper`,
-            `.frame-28`,
-        ].join(', '));
+        const elementsToDisable = document.querySelectorAll([`.some-example-not-for-tablet`].join(', '));
         
         // Временно убираем data-speed атрибуты
         elementsToDisable.forEach(el => {
@@ -52,7 +52,90 @@ const createScrollSmoother = () => {
         },
         ignoreMobileResize: true,
     });
+
+    ftFixSmoother();
 };
+
+
+function createSmoothScrollStructure() {
+  const body = document.body;
+
+  
+  if (!body) {
+    console.warn('Body element not found');
+    return;
+  }
+
+  // Проверяем, что структура еще не создана
+  if (document.querySelector('#smooth-wrapper')) {
+    return; // Структура уже существует
+  }
+
+  // Создаем wrapper div
+  const smoothWrapper = document.createElement('div');
+  smoothWrapper.id = 'smooth-wrapper';
+
+  // Создаем content div
+  const smoothContent = document.createElement('div');
+  smoothContent.id = 'smooth-content';
+
+  // Перемещаем все дочерние элементы body (кроме smoothWrapper) в smoothContent
+  while (body.firstChild) {
+    smoothContent.appendChild(body.firstChild);
+  }
+
+  // Добавляем content в wrapper
+  smoothWrapper.appendChild(smoothContent);
+
+  // Добавляем wrapper в body
+  body.appendChild(smoothWrapper);
+}
+
+
+function ftFixSmoother() {
+
+    const sOff = document.querySelector('.pictet-sign-off');
+    gsap.killTweensOf(sOff);
+    gsap.set(sOff, { clearProps: "all" });
+    gsap.set(sOff, { bottom: `unset`, top: 0 });
+
+    const nav = document.querySelector('.nav');
+    gsap.set(nav, { top: 0, transform: `translate( calc(100vw - 100% - 2.35rem), 0)` });
+    
+    ScrollTrigger.create({
+      trigger: `.m-pc`,
+      start: 'top top',
+      end: '+=100000 top',
+      pin: true,
+      pinSpacing: false,
+  })
+
+    ScrollTrigger.create({
+      trigger: `.pictet-sign-off`,
+      endTrigger: `.footer`,
+      start: 'bottom bottom',
+      end: 'top+=77 bottom',
+      pin: true,
+      pinSpacing: false,
+    //   markers: true
+  })
+
+      ScrollTrigger.create({
+      trigger: nav,
+      start: 'center center',
+      end: '+=100000 top',
+      pin: true,
+      pinSpacing: false,
+  })
+
+
+
+}
+
+
+
+
+
 const handleResize = () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
@@ -140,7 +223,7 @@ export const initGSAP = () => {
   });
 
   gsap.set([
-    `.art`,
+    // `.art`,
     // `.art-group`,
     // `.chart`,
     // `.line`,
@@ -154,10 +237,15 @@ export const initGSAP = () => {
 
 
     gsap.delayedCall(0.1, () => {
+
+        createScrollSmoother();
+
+
+        initNavigation();
         animateText();
         animateCharts();
         animateLines();
-        animateArts();
+        // animateArts();
         animateQuote();
 
         // Надёжный запуск animateHeaders после полной загрузки шрифтов и layout
