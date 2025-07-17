@@ -417,92 +417,66 @@ const animateChart4 = () => {
 
   const svg = chart.querySelector('svg');
   if (!svg) return;
+
   const group = svg.querySelector('.lines_with_texts');
-  if (!group) return;
+  const texts = Array.from(group.children).filter(el => el.tagName === 'text');
+  const paths = Array.from(group.children).filter(el => el.tagName === 'path');
+  const rect = svg.querySelector('rect');
 
-  const texts = Array.from(group.querySelectorAll('text'));
-  const paths = Array.from(group.querySelectorAll('path'));
+  console.log(svg, texts, paths, rect)
 
-  // 1. Центр SVG
-  let centerX = 0, centerY = 0;
-  if (svg.viewBox && svg.viewBox.baseVal) {
-    centerX = svg.viewBox.baseVal.x + svg.viewBox.baseVal.width / 2;
-    centerY = svg.viewBox.baseVal.y + svg.viewBox.baseVal.height / 2;
-  } else {
-    const bbox = svg.getBBox();
-    centerX = bbox.x + bbox.width / 2;
-    centerY = bbox.y + bbox.height / 2;
+  gsap.set([texts, rect, paths], { opacity: 0 });
+
+  const AnimationTimeline = () => {
+
+  // chart, svg, group, texts, paths, rect уже определены выше
+  // (если нет — получить их тут)
+  if (!rect || !paths.length || !texts.length) return;
+
+  // Сбросить состояния
+  gsap.set(rect, { scale: 0, transformOrigin: "50% 50%", opacity: 1 });
+  gsap.set(paths, { drawSVG: "0%", opacity: 1 });
+  gsap.set(texts, { opacity: 0 });
+
+  // Основной timeline
+  const tl = gsap.timeline();
+
+  // 1. rect scale появление
+  tl.to(rect, {
+    scale: 1,
+    duration: 0.5,
+    ease: "back.out(1.7)"
+  });
+
+  const indices = Array.from({length: paths.length}, (_, i) => i);
+  gsap.utils.shuffle(indices);
+  console.log(indices)
+  indices.forEach((i, id) => {
+    
+    const path = paths[i];
+    const text = texts[i];
+    tl.to(path, {
+      drawSVG: "100%",
+      duration: 0.7,
+      ease: "power1.inOut",
+      onStart: () => gsap.set(path, { opacity: 1 }),
+    }, 0.2 + id * 0.05);
+    tl.to(text, {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power1.inOut"
+    }, ">-=0.1");
+  });
+
+  // 3. После всех — включить floatTextAndLine и addDataFloatToTextsAndPaths
+  tl.call(() => {
+    addDataFloatToTextsAndPaths('.lines_with_texts');
+    floatTextAndLine('.lines_with_texts');
+  });
+
+  return tl;
+
   }
-
-  console.log(`Center of SVG: (${centerX}, ${centerY})`);
-
-  // 2. Сохраняем исходные позиции текстов и линий
-  const originalTextPos = texts.map(t => ({
-    x: t.getAttribute('x') ? parseFloat(t.getAttribute('x')) : t.getBBox().x + t.getBBox().width / 2,
-    y: t.getAttribute('y') ? parseFloat(t.getAttribute('y')) : t.getBBox().y + t.getBBox().height / 2
-  }));
-  const originalPathD = paths.map(p => p.getAttribute('d'));
-
-  // 3. Ставим все тексты в центр SVG
-  // texts.forEach(t => {
-  //   t.setAttribute('x', centerX);
-  //   t.setAttribute('y', centerY);
-  // });
-
-  // // 4. Рисуем все линии из исходной точки к центру
-  // paths.forEach((p, i) => {
-  //   // Определяем начальную точку из d
-  //   let d = p.getAttribute('d');
-  //   let match = d.match(/M\s*([\d.]+)[ ,]([\d.]+)/);
-  //   let x0 = centerX, y0 = centerY;
-  //   if (match) {
-  //     x0 = parseFloat(match[1]);
-  //     y0 = parseFloat(match[2]);
-  //   }
-  //   p.setAttribute('d', `M${x0},${y0} L${centerX},${centerY}`);
-  // });
-
-  // // 5. Скрываем все тексты и линии
-  // gsap.set([texts, paths], { opacity: 0 });
-  gsap.set(svg, { opacity: 0 });
-
-  // // 6. Анимация появления по очереди
-  // gsap.to([texts, paths], {
-  //   opacity: 1,
-  //   stagger: 0.12,
-  //   duration: 0.5,
-  //   ease: "power1.inOut",
-  //   onComplete: () => {
-  //     // 7. Возвращаем тексты и линии на исходные места
-  //     texts.forEach((t, i) => {
-  //       gsap.to(t, {
-  //         x: originalTextPos[i].x,
-  //         y: originalTextPos[i].y,
-  //         duration: 0.7,
-  //         ease: "power2.inOut"
-  //       });
-  //     });
-  //     paths.forEach((p, i) => {
-  //       gsap.to({}, {
-  //         duration: 0.7,
-  //         onUpdate: function() {
-  //           // Плавно интерполируем d
-  //           // Можно просто вернуть d, если не нужна интерполяция
-  //           p.setAttribute('d', originalPathD[i]);
-  //         },
-  //         onComplete: () => {
-  //           // После возврата — запускаем float
-  //           addDataFloatToTextsAndPaths('.lines_with_texts');
-  //           floatTextAndLine('.lines_with_texts');
-  //         }
-  //       });
-  //     });
-  //   }
-  // });
-
-
-
-
 
 
   gsap.fromTo(svg,
@@ -516,7 +490,10 @@ const animateChart4 = () => {
         start: "top center",
         onEnter: () => {
           gsap.to(svg, { opacity: 1, duration: 1, ease: "power1.inOut" });
-          // AnimationTimeline()
+          
+          AnimationTimeline()
+
+
         },
         onLeaveBack: () => {
           gsap.to(svg, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
