@@ -2,8 +2,11 @@
 @use 'variables' as *
 
 .split-word
-    display: inline-block
     will-change: transform, opacity
+    display: inline-block
+    vertical-align: baseline
+    width: auto
+    white-space: normal
 .split-line
     display: block
     overflow: hidden
@@ -11,9 +14,13 @@
     width: 100%
 mark
     position: relative
-    display: inline-block
     z-index: 1
     text-decoration: none
+    display: inline-block
+    vertical-align: baseline
+    width: auto
+    white-space: normal
+
 
     .underline-anim
         position: absolute
@@ -117,7 +124,7 @@ mark
                 position: absolute
                 left: 136px
                 top: 175px
-                width: 61.6875rem
+                width: 62.6875rem
 
                 &::before
                     content: ""
@@ -136,7 +143,7 @@ mark
                 .h1
                     position: relative
                     width: 100%
-                    text-wrap: balance
+                    // text-wrap: balance
                     color: $header-color
                     text-align: center
                     font-feature-settings: 'liga' off, 'clig' off
@@ -146,6 +153,8 @@ mark
                     font-weight: 400
                     line-height: 120%
                     z-index: 1
+                    font-kerning: none 
+                    text-rendering: optimizeSpeed
 
                     .subheader
                         color: $secondary-color
@@ -219,6 +228,8 @@ mark
                 font-weight: 400
                 line-height: 120%
                 text-align: center
+                font-kerning: none 
+                text-rendering: optimizeSpeed
                 span
                     display: inline-block
                     font-size: 1.875rem
@@ -353,7 +364,7 @@ mark
 
                 mark
                     font-style: italic
-                    text-decoration-line: underline
+                    // text-decoration-line: underline
                     text-decoration-style: solid
                     text-decoration-skip-ink: auto
                     text-decoration-thickness: 2px
