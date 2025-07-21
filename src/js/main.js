@@ -100,8 +100,7 @@ function ftFixSmoother() {
     gsap.set(sOff, { bottom: `unset`, top: 0 });
 
     const nav = document.querySelector('.nav');
-    gsap.set(nav, { top: 0, transform: `translate( calc(100vw - 100% - 2.35rem), 0)` });
-    
+
     ScrollTrigger.create({
       trigger: `.m-pc`,
       start: 'top top',
