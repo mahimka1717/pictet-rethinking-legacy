@@ -329,12 +329,11 @@ const animateChart2 = () => {
             onEnter: () => {
               gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
               gsap.fromTo(valueEl, 
-                { innerText: 0 }, 
+                { innerText: 30 }, 
                 {
                   innerText: finalValue,
                   duration: 1,
                   ease: "power1.inOut",
-                  snap: { innerText: 1 },
                   onUpdate: function() {
                     valueEl.textContent = Math.round(this.targets()[0].innerText) + '%';
                   }
@@ -597,9 +596,6 @@ const animateChart5 = () => {
     }
   );
 
-
-  const sm = window.matchMedia('(max-width: 576px)');
-  // Оригинальные пути делаем невидимыми (opacity: 0)
   let svg = chart.querySelector('.chart5__desktop');
   if (sm.matches) {
     svg = chart.querySelector('.chart5__mobile');
@@ -687,19 +683,18 @@ const animateChart5 = () => {
 
   // Для каждого сектора и подписи — строго последовательные шаги
   animatedSectors.forEach((sector, i) => {
-    // Для каждого сектора создаём маску-дугу, которая "открывает" сектор
-    const maskId = `pie-mask-${i}`;
-    let mask = svg.querySelector(`#${maskId}`);
-    if (mask) mask.remove();
-    mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-    mask.setAttribute('id', maskId);
-    svg.appendChild(mask);
+    // Для каждого сектора создаём clipPath-дугу, которая "открывает" сектор
+    const clipId = `pie-clip-${i}`;
+    let clip = svg.querySelector(`#${clipId}`);
+    if (clip) clip.remove();
+    clip = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+    clip.setAttribute('id', clipId);
+    svg.appendChild(clip);
 
-    // В маске — белая дуга, которая "растёт" по углу
-    const maskArc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    maskArc.setAttribute('fill', '#fff');
-    mask.appendChild(maskArc);
-    sector.path.setAttribute('mask', `url(#${maskId})`);
+    // В clipPath — дуга, которая "растёт" по углу
+    const clipArc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    clip.appendChild(clipArc);
+    sector.path.setAttribute('clip-path', `url(#${clipId})`);
 
     gsap.set(sector.path, { opacity: 1 });
     const angleObj = { drawAngle: 0 };
@@ -712,7 +707,7 @@ const animateChart5 = () => {
       onUpdate: function() {
         const curAngle = sector.startAngle + (angleObj.drawAngle || 0);
         if (isNaN(curAngle)) return;
-        maskArc.setAttribute('d', describeArc(cx, cy, r + 1, sector.startAngle, curAngle));
+        clipArc.setAttribute('d', describeArc(cx, cy, r + 1, sector.startAngle, curAngle));
       },
       onStart: function() {
         sector.path.style.opacity = 1;
@@ -777,7 +772,7 @@ captions.forEach(caption => {
         onEnter: () => {
           gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
           gsap.fromTo(valueEl, 
-            { innerText: 0 }, 
+            { innerText: 1 }, 
             {
               innerText: finalValue,
               duration: 1,
