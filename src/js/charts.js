@@ -433,7 +433,7 @@ const animateChart3 = () => {
         trigger: chart,
         endTrigger: chart,
         start: `top+=${i * 20} ${point}`,
-        end: `center+=${i * 20} ${point}`,
+        end: `top+=${i * 20 + 100} ${point}`,
         scrub: true,
       }
     });
