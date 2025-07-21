@@ -3,6 +3,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+
+
+let point = "center";
+const sm = window.matchMedia('(max-width: 576px)');
+if (sm.matches) {
+  point = "75%";
+}
+
+
 export const animateQuote = () => {
   const run = () => {
     // Найти все цитаты
@@ -11,6 +20,9 @@ export const animateQuote = () => {
       const svg = quote.querySelector('svg');
       const blockquote = quote.querySelector('blockquote');
       const author = quote.querySelector('.author');
+      
+
+
 
       // 1. Анимация SVG кавычек
       gsap.set(svg, { opacity: 0, y: 40, scale: 0.75, transformOrigin: 'center center' });
@@ -38,7 +50,7 @@ export const animateQuote = () => {
       // 4. ScrollTrigger с анимацией в обе стороны
       ScrollTrigger.create({
         trigger: quote,
-        start: 'top center',
+        start: `top ${point}`,
         onEnter: () => {
           // Анимация SVG кавычек
           gsap.to(svg, {

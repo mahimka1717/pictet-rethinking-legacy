@@ -2,7 +2,23 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
+import Swiper from 'swiper';
+
+import { Pagination } from 'swiper/modules';
+
+
+
+const sm = window.matchMedia('(max-width: 576px)');
+let point = "center";
+if (sm.matches) {
+  point = "75%";
+}
+
+
+
+
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+
 
 // Добавляет data-float всем <text> и <path> внутри .lines_with_texts по порядку
 function addDataFloatToTextsAndPaths(groupSelector = '.lines_with_texts') {
@@ -231,6 +247,7 @@ function floatTextAndLine(groupSelector = '.lines_with_texts') {
 }
 
 
+
 const animateChart1 = () => {
 
   const chart = document.querySelector('.chart[data-id="1"]');
@@ -244,7 +261,7 @@ const animateChart1 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: chart,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
         onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
       }
@@ -262,8 +279,8 @@ const animateChart1 = () => {
     ease: "power1.inOut",
     scrollTrigger: {
       trigger: chart,
-      start: "top center",
-      end: "center center",
+      start: `top ${point}`,
+      end: `center ${point}`,
       scrub: true
     }
   });
@@ -283,55 +300,80 @@ const animateChart2 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: chart,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
         onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
       }
     }
   );
 
-  // Анимация SVG внутри chart__caption (без враппера)
-  const captions = chart.querySelectorAll('.chart__caption');
-  if (!captions) return;
 
-  captions.forEach(caption => {
-    const valueEl = caption.querySelector('.chart__caption_value');
-    const finalValue = parseInt(valueEl.textContent, 10);
+  if (!sm.matches) {
+    // Анимация SVG внутри chart__caption (без враппера)
+    const captions = chart.querySelectorAll('.chart__caption');
+    if (!captions) return;
 
-    gsap.fromTo(caption,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 1,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: caption,
-          start: "top 65%",
-          onEnter: () => {
-            gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
-            gsap.fromTo(valueEl, 
-              { innerText: 0 }, 
-              {
-                innerText: finalValue,
-                duration: 1,
-                ease: "power1.inOut",
-                snap: { innerText: 1 },
-                onUpdate: function() {
-                  valueEl.textContent = Math.round(this.targets()[0].innerText) + '%';
+    captions.forEach(caption => {
+      const valueEl = caption.querySelector('.chart__caption_value');
+      const finalValue = parseInt(valueEl.textContent, 10);
+
+      gsap.fromTo(caption,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: caption,
+            start: "top 65%",
+            onEnter: () => {
+              gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
+              gsap.fromTo(valueEl, 
+                { innerText: 0 }, 
+                {
+                  innerText: finalValue,
+                  duration: 1,
+                  ease: "power1.inOut",
+                  snap: { innerText: 1 },
+                  onUpdate: function() {
+                    valueEl.textContent = Math.round(this.targets()[0].innerText) + '%';
+                  }
                 }
-              }
-            );
-          },
-          onLeaveBack: () => {
-            gsap.to(caption, { opacity: 0, duration: 0.5, ease: "power1.inOut" });
-            // valueEl.textContent = '0%';
+              );
+            },
+            onLeaveBack: () => {
+              gsap.to(caption, { opacity: 0, duration: 0.5, ease: "power1.inOut" });
+              // valueEl.textContent = '0%';
+            }
           }
         }
-      }
-    );
-  });
+      );
+    });
+  }
 
 
+
+  if (sm.matches) {
+    const swiperEl = chart.querySelector('.swiper');
+    if (swiperEl && swiperEl.querySelector('.swiper-slide')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      link.onload = () => {
+        setTimeout(() => {
+          console.log('Styles loaded');
+          new Swiper(swiperEl, {
+            modules: [Pagination],
+            pagination: { 
+              el: '.swiper-pagination',
+              clickable: true,
+            }
+          });
+        }, 0);
+      };
+      document.head.appendChild(link);
+    }
+  }
 
   swingElement('.art[data-id="28"]', { angle: 5, origin: "center bottom" });
   swingTopWithFollow('.art[data-id="28"]', '.art[data-id="29"]');
@@ -350,18 +392,19 @@ const animateChart3 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: chart,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
         onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
       }
     }
   );
 
-  const svg = chart.querySelector('svg');
-  console.log(svg)
+  const svg = chart.querySelector('.divchart');
+  // console.log(svg)
   // Получаем пути и value (текстовые поля)
-  const paths = chart.querySelectorAll('#chart3-paths path');
-  const values = chart.querySelectorAll('#chart3-values text tspan');
+  const paths = chart.querySelectorAll('.chart3__bar');
+  const values = chart.querySelectorAll('.chart3__value');
+  const percents = [8, 18, 24, 13, 48, 29];
 
   // Анимация по порядку с задержкой
   paths.forEach((path, i) => {
@@ -369,56 +412,30 @@ const animateChart3 = () => {
     gsap.set(path, { transformOrigin: `0% 50%`, scaleX: 0 });
     const value = values[i];
     if (!value) return;
-
     let targetValue = 0;
     let valueText = value.textContent || value.innerHTML;
     const match = valueText.match(/([\d.]+)%?/);
     if (match) targetValue = parseFloat(match[1]);
-
-    // Получаем x value (текущее положение) и x конца пути (откуда стартовать)
-    let valueX = 0;
-    if (value.getAttribute('x') !== null) {
-      valueX = parseFloat(value.getAttribute('x'));
-    } else if (value.getBBox) {
-      valueX = value.getBBox().x;
-    }
-
-    let pathEndX = 0;
-    if (path.getAttribute('d')) {
-      // Ищем последнюю координату X в d (L x y или H x)
-      const d = path.getAttribute('d');
-      let matchL = d.match(/L\s*([\d.\-]+)[ ,]([\d.\-]+)/g);
-      if (matchL && matchL.length > 0) {
-        const lastL = matchL[matchL.length - 1].match(/L\s*([\d.\-]+)[ ,]([\d.\-]+)/);
-        if (lastL) pathEndX = parseFloat(lastL[1]);
-      } else {
-        // H x
-        let matchH = d.match(/H\s*([\d.\-]+)/);
-        if (matchH) pathEndX = parseFloat(matchH[1]);
-        else {
-          // Если только M x y
-          let matchM = d.match(/M\s*([\d.\-]+)[ ,]([\d.\-]+)/);
-          if (matchM) pathEndX = parseFloat(matchM[1]);
-        }
-      }
-    }
-
-    const startX = pathEndX + 10;
-    const endX = valueX;
-    value.setAttribute('x', startX);
     value.textContent = '0%';
 
+
+    const sm = window.matchMedia('(max-width: 576px)');
+    let a = document.querySelector('.chart3__chart');
+    let wd = 668
+    if (sm.matches) {
+      wd = a.offsetWidth;
+    }
+
+    
+
     // Анимация пути и value
-
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: chart,
         endTrigger: chart,
-        start: `top+=${i * 20} center`,
-        end: `center+=${i * 20} center`,
+        start: `top+=${i * 20} ${point}`,
+        end: `center+=${i * 20} ${point}`,
         scrub: true,
-
       }
     });
 
@@ -427,17 +444,16 @@ const animateChart3 = () => {
       ease: 'linear',
       onUpdate: function() {
         const prog = this.progress();
-        const curX = startX + (endX - startX) * prog;
-        value.setAttribute('x', curX);
         const val = Math.round(targetValue * prog);
         value.textContent = val + '%';
         gsap.set(path, { scaleX: prog });
 
-
-
+        const currentX = wd * (percents[i] * 2 / 100) * (1 - prog)
+        
+        // value.style.transform = `translateX(${currentX}px)`;
+        gsap.set(value, { x: -currentX });
       },
       onComplete: function() {
-        value.setAttribute('x', endX);
         value.textContent = targetValue + '%';
       }
     }, 0);
@@ -456,14 +472,18 @@ const animateChart4 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: chart,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
         onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
       }
     }
   );
 
-  const svg = chart.querySelector('svg');
+  let svg = chart.querySelector('.chart3__desktop');
+
+  if (sm.matches) {
+    svg = chart.querySelector('.chart3__mobile');
+  }
   if (!svg) return;
 
   const group = svg.querySelector('.lines_with_texts');
@@ -471,7 +491,7 @@ const animateChart4 = () => {
   const paths = Array.from(group.children).filter(el => el.tagName === 'path');
   const rect = svg.querySelector('rect');
 
-  console.log(svg, texts, paths, rect)
+
 
   gsap.set([texts, rect, paths], { opacity: 0 });
 
@@ -498,7 +518,7 @@ const animateChart4 = () => {
 
   const indices = Array.from({length: paths.length}, (_, i) => i);
   gsap.utils.shuffle(indices);
-  console.log(indices)
+  // console.log(indices)
   indices.forEach((i, id) => {
     
     const path = paths[i];
@@ -518,8 +538,15 @@ const animateChart4 = () => {
 
   // 3. После всех — включить floatTextAndLine и addDataFloatToTextsAndPaths
   tl.call(() => {
-    addDataFloatToTextsAndPaths('.lines_with_texts');
-    floatTextAndLine('.lines_with_texts');
+
+      if (sm.matches) {
+        addDataFloatToTextsAndPaths('.chart3__mobile > .lines_with_texts');
+        floatTextAndLine('.chart3__mobile > .lines_with_texts');
+      } else {
+        addDataFloatToTextsAndPaths('.chart3__desktop > .lines_with_texts');
+        floatTextAndLine('.chart3__desktop > .lines_with_texts');
+      }
+
   });
 
   return tl;
@@ -535,7 +562,7 @@ const animateChart4 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: svg,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => {
           gsap.to(svg, { opacity: 1, duration: 1, ease: "power1.inOut" });
           
@@ -549,9 +576,6 @@ const animateChart4 = () => {
       }
     }
   );
-
-
-
 }
 
 const animateChart5 = () => {
@@ -566,7 +590,7 @@ const animateChart5 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: chart,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
         onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
       }
@@ -574,9 +598,13 @@ const animateChart5 = () => {
   );
 
 
-
+  const sm = window.matchMedia('(max-width: 576px)');
   // Оригинальные пути делаем невидимыми (opacity: 0)
-  const svg = chart.querySelector('svg');
+  let svg = chart.querySelector('.chart5__desktop');
+  if (sm.matches) {
+    svg = chart.querySelector('.chart5__mobile');
+  }
+
   if (!svg) return;
   const origPaths = svg.querySelectorAll('path');
   origPaths.forEach(p => p.style.opacity = 0);
@@ -591,7 +619,13 @@ const animateChart5 = () => {
   ];
   const pieStroke = '#3E3E3E';
   const pieStrokeWidth = 0.5;
-  const cx = 220, cy = 216, r = 132; // центр и радиус
+  let cx = 220, cy = 216, r = 132; // центр и радиус
+
+  
+  if (sm.matches) {
+    cx = 89+77, cy = 78+77, r = 77;
+  }
+
 
   // Удаляем старые кастомные сектора если есть
   const oldCustom = svg.querySelectorAll('.pie-animated-sector');
@@ -645,8 +679,8 @@ const animateChart5 = () => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: svg,
-      start: 'top 60%',
-      end: 'center 50%',
+      start: `top ${point}+=10%`,
+      end: `center ${point}`,
       scrub: true,
     }
   });
@@ -716,7 +750,7 @@ const animateChart6 = () => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: chart,
-        start: "top center",
+        start: `top ${point}`,
         onEnter: () => gsap.to(chart, { opacity: 1, duration: 1, ease: "power1.inOut" }),
         onLeaveBack: () => gsap.to(chart, { opacity: 0, duration: 0.5, ease: "power1.inOut" })
       }
@@ -739,7 +773,7 @@ captions.forEach(caption => {
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: caption,
-        start: "top 65%",
+        start: `top ${point}+=15%`,
         onEnter: () => {
           gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
           gsap.fromTo(valueEl, 
@@ -778,7 +812,7 @@ captions.forEach(caption => {
           ease: "power1.inOut",
           scrollTrigger: {
             trigger: caption2,
-            start: "top center",
+            start: `top ${point}`,
             onEnter: () => {
               // gsap.killTweensOf(caption2); // Очищаем предыдущие анимации
               gsap.to(caption2, { opacity: 1, duration: 1, ease: "power1.inOut" });
@@ -794,19 +828,10 @@ captions.forEach(caption => {
 
 }
 
-
-
 export const animateCharts = () => {
-
-
-
-
-
-
 
     const charts = document.querySelectorAll('.chart');
     gsap.set(charts, { opacity: 0 });
-
 
     animateChart1();
     animateChart2();

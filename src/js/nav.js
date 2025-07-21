@@ -1,4 +1,4 @@
-import { smoother } from './gsap';
+import { smoother } from './main';
 
 
 export function initNavigation() {

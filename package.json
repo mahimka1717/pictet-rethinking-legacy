@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "gsap": "^3.13.0",
+    "swiper": "^11.2.10",
     "vite-plugin-handlebars": "^2.0.0"
   }
 }

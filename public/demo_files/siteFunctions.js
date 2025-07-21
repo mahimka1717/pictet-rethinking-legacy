@@ -77,7 +77,7 @@ $(document).ready(function () {
 		var textContainer = t.find('.pct-btn-container-text');
 		var text = "Button: " + textContainer.text();
 		
-        TrackEvent("Timeline Infogrpahic", "Click", text);
+        trackEvent("Timeline Infogrpahic", "Click", text);
 	});
 
 	$("#pct-right-btn,#pct-left-btn").click(function (e) {
@@ -85,7 +85,7 @@ $(document).ready(function () {
 		clearTimeout(tlScroll);
 	
 		tlScroll = setTimeout(function(){
-			TrackEvent("Timeline Infogrpahic", "Scroll", "Slide: " + $(".pct-btn-container.active").text())
+			trackEvent("Timeline Infogrpahic", "Scroll", "Slide: " + $(".pct-btn-container.active").text())
 		}, 2000);
 
 	});
@@ -100,7 +100,7 @@ $(document).ready(function () {
 			viewingMobileSlide = $(".pct-btn-container.active").text()
 
 			if (viewingMobileSlide!=currMobileSlide) {
-				TrackEvent("Timeline Infogrpahic", "Mobile View", "Slide: " + $(".pct-btn-container.active").text())
+				trackEvent("Timeline Infogrpahic", "Mobile View", "Slide: " + $(".pct-btn-container.active").text())
 			}
 			currMobileSlide = viewingMobileSlide;
 		}, 3000)
@@ -447,5 +447,18 @@ function RestartAllVideos() {
         $(this)[0].removeAttribute("controls");
         $(this).prev(".play-page-video").show();
     });
+}
+
+// Simple analytics event function to avoid DOM API conflict
+function trackEvent(category, action, label) {
+    // Здесь можно добавить отправку данных в аналитику, например, через gtag или console.log
+    if (window.gtag) {
+        window.gtag('event', action, {
+            'event_category': category,
+            'event_label': label
+        });
+    } else {
+        console.log('trackEvent:', category, action, label);
+    }
 }
 

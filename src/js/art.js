@@ -1,7 +1,3 @@
-
-
-
-
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
@@ -10,15 +6,18 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MorphSVGPlugin);
 gsap.registerPlugin(MotionPathPlugin);
 
-  const ids = ["1", "2", "3", "4", "5", "30", "36", "37", "38", "39", "51", "55",
+const ids = [
+    "1", "2", "3", "4", "5", "30", "36", "37", "38", "39", "51", "55",
     "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68",
-
     "14", "15", "16", "17", "19", "20"
-
     // "12", "13", "14", "15", "16", "18", "19", "20", "21"
+];
 
-
-  ];
+const sm = window.matchMedia('(max-width: 576px)');
+let point = "center";
+if (sm.matches) {
+  point = "75%";
+}
 
 
 const animateSinglePersons = (ids) => {
@@ -77,26 +76,26 @@ const animateSingleBuilding = (ids) => {
             ease: "power3.out",
             scrollTrigger: {
                 trigger: `.art[data-id="${id}"]`,
-                start: "top 50%",
-                end: "bottom 50%",
+                start: `top ${point}`,
+                end: `bottom ${point}`,
                 scrub: true,
                 // markers: true // для отладки
             }
         });
 
-        let masked = document.querySelector(`.art[data-id="${id}"]`);
-        gsap.set(masked, { clipPath: `ellipse(30% 0% at 50% 50%)` });
-        gsap.to(masked, {
-            clipPath: `ellipse(100% 65% at 50% 50%)`,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: masked,
-                start: "top 50%",
-                end: "bottom 50%",
-                scrub: true,
-                // markers: true // для отладки
-            }
-        });
+        // let masked = document.querySelector(`.art[data-id="${id}"]`);
+        // gsap.set(masked, { clipPath: `ellipse(30% 0% at 50% 50%)` });
+        // gsap.to(masked, {
+        //     clipPath: `ellipse(100% 65% at 50% 50%)`,
+        //     ease: "power3.out",
+        //     scrollTrigger: {
+        //         trigger: masked,
+        //         start: `top ${point}`,
+        //         end: `bottom ${point}`,
+        //         scrub: true,
+        //         // markers: true // для отладки
+        //     }
+        // });
     });
 }
 
@@ -297,8 +296,8 @@ const animateArt5 = () => {
         ease: "power3.out",
         scrollTrigger: {
             trigger: `.art[data-id="33"]`,
-            start: "top 50%",
-            end: "bottom 50%",
+            start: `top ${point}`,
+            end: `bottom ${point}`,
             scrub: true,
             // markers: true // для отладки
         }
@@ -307,7 +306,7 @@ const animateArt5 = () => {
 
     ScrollTrigger.create({
         trigger: `.art[data-id="33"]`,
-        start: "25% 50%",
+        start: `25% ${point}`,
         onEnter: () => {
             // console.log('enter');
             gsap.to([art31], {
@@ -331,7 +330,7 @@ const animateArt5 = () => {
 
     ScrollTrigger.create({
         trigger: `.art[data-id="33"]`,
-        start: "35% 50%",
+        start: `35% ${point}`,
         onEnter: () => {
             // console.log('enter');
             gsap.to([art32], {
@@ -353,13 +352,13 @@ const animateArt5 = () => {
         },
     });
 
-    let point = "center-=50";
+    // let point = "center-=50";
 
     gsap.to(art32, {
     scrollTrigger: {
         trigger: ".line[data-id='13']",
-        start: ()=> `top ${point}`,
-        end: ()=>`bottom ${point}`,
+        start: ()=> `top ${point}-=50`,
+        end: ()=>`bottom ${point}-=50`,
         scrub: true,
         // markers: true
     },

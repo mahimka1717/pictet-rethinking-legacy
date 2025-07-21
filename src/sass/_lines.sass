@@ -1,0 +1,249 @@
+@use 'mixins' as *
+@use 'variables' as *
+
+.line
+    position: absolute
+    display: block
+    @include mbp-down(sm)
+        position: relative
+    path
+        vector-effect: non-scaling-stroke
+
+    &[data-id="0"]
+        left: 39.375rem
+        top: 32.0625rem
+        @include mbp-down(sm)
+            display: block
+            left: unset
+            top: unset
+            margin: 0.69rem auto
+
+    &[data-id="1"]
+        left: 33.6875rem
+        top: 42.875rem
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+            transform: translate(-30px, 0)
+            // padding-right: 50px
+
+
+    &[data-id="2"]
+        left: 36.625rem
+        top: calc(88.9375rem - 60.4375rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+
+    &[data-id="3"]
+        left: 32.5625rem
+        top: calc(145.1875rem - 60.4375rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+            height: 21rem
+            transform: translate(-10px, 0)
+
+    &[data-id="4"]
+        left: 39.375rem
+        top: calc(217.5625rem - 60.4375rem + 7.45rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+            height: 43px
+
+
+    &[data-id="5"]
+        left: calc(39.375rem - 2.56rem)
+        top: calc(233.875rem - 224.4375rem - 10.25rem)
+        @include mbp-down(sm)
+            position: absolute
+           
+
+    &[data-id="6"]
+        left: calc(5.1875rem - 2.56rem)
+        top: calc(244.0625rem - 224.4375rem - 10.25rem)
+        @include mbp-down(sm)
+            position: absolute
+
+
+
+    &[data-id="7"]
+        left: 39.375rem
+        top: calc(290.5rem - 224.4375rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+
+    &[data-id="8"]
+        left: 3.4375rem
+        top: calc(306.625rem - 224.4375rem)
+        @include mbp-down(sm)
+            display: none
+
+    &[data-id="9"]
+        left: 43.5rem
+        top: calc(315rem - 224.4375rem)
+        @include mbp-down(sm)
+            display: none
+
+    &[data-id="10"]
+        left: 19.125rem
+        top: calc(338.0625rem - 224.4375rem)
+        @include mbp-down(sm)
+            display: none
+
+    &[data-id="11"]
+        left: 39.375rem
+        top: calc(373.9375rem - 224.4375rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+
+    &[data-id="12"]
+        left: calc(-0.5rem - 4.75rem - 8.38rem)
+        top: calc(401.4375rem - 380.4375rem - 26.56rem)
+        @include mbp-down(sm)
+            position: absolute
+            display: block
+
+
+    &[data-id="13"]
+        left: calc(16.25rem - 8.38rem)
+        top: calc(411.625rem - 380.4375rem - 26.56rem)
+        @include mbp-down(sm)
+            position: absolute
+            display: block
+
+    &[data-id="14"]
+        left: 39.625rem
+        top: calc(415.0625rem - 380.4375rem)
+        transform-origin: left center
+        @include mbp-down(sm)
+            position: absolute
+            right: -310px
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem 0
+            width: 840px
+            height: 300px
+            margin-top: -320px
+
+    &[data-id="15"]
+        left: calc(-0.5rem - 0.5rem - 0.0625rem - 0.0625rem)
+        top: calc(451.5rem - 380.4375rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 0.69rem auto
+            margin-left: -190px
+            margin-top: -470px
+
+    &[data-id="16"]
+        left: 39.375rem
+        top: calc(539.625rem - 510.4375rem)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 1rem auto 2rem auto
+
+    &[data-id="17"]
+        left: 27.375rem
+        top: calc(618.5rem - 510.4375rem)
+        @include mbp-down(sm)
+            display: none
+
+    &[data-id="18"]
+        left: 39.375rem
+        top: calc(683.625rem - 659.4375rem + 176px)
+        @include mbp-down(sm)
+            left: unset
+            top: unset
+            display: block
+            margin: 2rem auto 2rem auto
+
+    &[data-id="19"]
+        left: -7px
+        top: -20px
+        @include mbp-down(sm)
+            top: 20px
+
+    &[data-id="20"]
+        left: 50%
+        transform: translate(-50%, 0)
+        bottom: 0
+        @include mbp-down(sm)
+            height: 3.4rem
+            bottom: unset
+            // top: 100%
+            transform: translate(-50%, 155px)
+
+
+    &[data-id="21"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            top: unset
+            margin: 0.69rem auto
+
+    &[data-id="22"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            top: unset
+            margin: 0.69rem auto
+
+    &[data-id="23"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            position: relative
+            top: unset
+            margin: -40rem 50% 0.69rem auto
+
+    &[data-id="24"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            position: relative
+            top: unset
+            margin: 10rem 0 10rem auto
+
+    &[data-id="25"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            position: relative
+            top: unset
+            margin: 2rem auto
+
+    &[data-id="26"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            position: absolute
+            transform: translate(242px, -454px)
+
+    &[data-id="27"]
+        display: none
+        @include mbp-down(sm)
+            display: block
+            position: relative
+            top: unset
+            margin: 0 auto 2rem auto
+

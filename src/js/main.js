@@ -1,8 +1,279 @@
-import { initGSAP } from "./gsap.js";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+import { animateCharts } from "./charts";
+import { animateLines } from "./lines";
+import { animateHeaders } from "./headers";
+import { animateArts } from "./art";
+import { animateQuote } from "./quote";
+import { initNavigation } from "./nav.js";
+
+export let smoother;
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+const xl = 1440;
+const md = 740;
+let resizeTimer;
+
+// smoother
+const createScrollSmoother = () => {
+    
+    createSmoothScrollStructure();
+    
+    if (smoother) {
+        smoother.kill();
+    }
+
+    const wd = window.innerWidth;
+    const isTablet = wd > md && wd < xl;
+    
+    // Для планшетов отключаем эффекты у определенных элементов
+    if (isTablet) {
+        // Находим элементы, которые НЕ должны анимироваться на планшетах
+        const elementsToDisable = document.querySelectorAll([`.some-example-not-for-tablet`].join(', '));
+        
+        // Временно убираем data-speed атрибуты
+        elementsToDisable.forEach(el => {
+            el.dataset.originalSpeed = el.dataset.speed;
+            delete el.dataset.speed;
+        });
+    }
+    
+    smoother = ScrollSmoother.create({
+        smooth: 2, // Увеличенная плавность (медленнее прокрутка)
+        smoothTouch: 2,
+        // smoothTouch: isIOS?0.5:false, // Плавность для сенсорных устройств
+        effects: true, // window.innerWidth > md ? true : false, // Включаем эффекты только для больших экранов
+        normalizeScroll: {
+            allowNestedScroll: true, // позволяет вложенную прокрутку
+            type: "pointer,touch,wheel"
+        },
+        ignoreMobileResize: true,
+    });
+
+    ftFixSmoother();
+};
+
+
+function createSmoothScrollStructure() {
+  const body = document.body;
+
+  
+  if (!body) {
+    console.warn('Body element not found');
+    return;
+  }
+
+  // Проверяем, что структура еще не создана
+  if (document.querySelector('#smooth-wrapper')) {
+    return; // Структура уже существует
+  }
+
+  // Создаем wrapper div
+  const smoothWrapper = document.createElement('div');
+  smoothWrapper.id = 'smooth-wrapper';
+
+  // Создаем content div
+  const smoothContent = document.createElement('div');
+  smoothContent.id = 'smooth-content';
+
+  // Перемещаем все дочерние элементы body (кроме smoothWrapper) в smoothContent
+  while (body.firstChild) {
+    smoothContent.appendChild(body.firstChild);
+  }
+
+  // Добавляем content в wrapper
+  smoothWrapper.appendChild(smoothContent);
+
+  // Добавляем wrapper в body
+  body.appendChild(smoothWrapper);
+}
+
+
+function ftFixSmoother() {
+
+    const sOff = document.querySelector('.pictet-sign-off');
+    gsap.killTweensOf(sOff);
+    gsap.set(sOff, { clearProps: "all" });
+    gsap.set(sOff, { bottom: `unset`, top: 0 });
+
+    const nav = document.querySelector('.nav');
+    gsap.set(nav, { top: 0, transform: `translate( calc(100vw - 100% - 2.35rem), 0)` });
+    
+    ScrollTrigger.create({
+      trigger: `.m-pc`,
+      start: 'top top',
+      end: '+=100000 top',
+      pin: true,
+      pinSpacing: false,
+  })
+
+
+  const sm = window.matchMedia('(max-width: 576px)');
+  let end = 'top+=77 bottom'
+  if (sm.matches) {
+    end = 'top bottom'
+  }
+
+
+    ScrollTrigger.create({
+      trigger: `.pictet-sign-off`,
+      endTrigger: `.footer`,
+      start: 'bottom bottom',
+      end: end,
+      pin: true,
+      pinSpacing: false,
+    //   markers: true
+  })
+
+      ScrollTrigger.create({
+      trigger: nav,
+      start: 'center center',
+      end: '+=100000 top',
+      pin: true,
+      pinSpacing: false,
+  })
+
+
+
+}
+
+
+
+
+
+const handleResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        reinitializeAnimations();
+    }, 250); // Задержка для избежания множественных вызовов
+};
+// Обработчик изменения ориентации
+const handleOrientationChange = () => {
+    // Ждем завершения поворота экрана
+    setTimeout(() => {
+        reinitializeAnimations();
+    }, 250);
+};
+//////////// resize
+const cleanupAnimations = () => {
+    // Убиваем все ScrollTriggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    
+    // Убиваем все GSAP анимации
+    gsap.killTweensOf("*");
+
+    // Восстанавливаем CSS свойства элементов к первоначальному состоянию
+    cleanupElements();
+
+    // Убиваем ScrollSmoother
+    if (smoother) {
+        smoother.kill();
+        smoother = null;
+    }
+
+    gsap.set('*', { clearProps: "all" });
+};
+const reinitializeAnimations = () => {
+
+    cleanupAnimations();
+
+    gsap.delayedCall(0.1, () => {
+
+        createScrollSmoother();
+
+
+        // Обновляем ScrollTriggers
+        ScrollTrigger.refresh();
+    })
+}
+
+
+
+const animateText = () => {
+    document.querySelectorAll('.p, .intro-p').forEach(el => {
+    // Сначала выставляем opacity 0
+    gsap.set(el, { opacity: 0 });
+    let point = "center";
+    const sm = window.matchMedia('(max-width: 576px)');
+    if (sm.matches) {
+      point = "75%";
+    }
+
+    ScrollTrigger.create({
+        trigger: el,
+        start: `top ${point}`,
+        onEnter: () => {
+        
+        gsap.killTweensOf(el); // Убиваем предыдущие анимации, если есть  
+        gsap.to(el, {
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power2.out'
+        });
+        },
+        onLeaveBack: () => {
+        gsap.killTweensOf(el);
+            gsap.to(el, {
+            opacity: 0,
+            duration: 0.25, // например, дольше назад
+            ease: 'power1.out'
+        });
+        }
+    });
+    });
+}
+
 
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    initGSAP();
+ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    gsap.config({
+        force3D: !isIOS,
+        // nullTargetWarn: false,
+    });
+
+
+
+
+    gsap.delayedCall(0, () => {
+
+
+        gsap.set([
+        `.h1`,
+        `.h2`,
+        `.p`,
+        `.intro-p`,
+        // `.outtro-p`,
+        ], { opacity: 0 })
+
+
+        createScrollSmoother();
+
+        initNavigation();
+        animateText();
+        animateCharts();
+        animateLines();
+        animateArts();
+        animateQuote();
+        animateHeaders();
+
+
+
+
+
+        gsap.to('.article', {
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power2.out',
+            onComplete: () => {
+                ScrollTrigger.refresh();
+            }
+        });
+
+    });
     
 });

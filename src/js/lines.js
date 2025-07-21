@@ -9,6 +9,7 @@ export const animateLines = () => {
     // console.log('animateLines');
   // Найти все .line на странице
   const lines = document.querySelectorAll('.line');
+  
   if (!lines.length) return;
 
   // Сбросить все path внутри .line в 0%
@@ -27,31 +28,32 @@ export const animateLines = () => {
 
 
   paths.forEach((path, i) => {
-
     let point = "center";
-    if(i===13) point = "center-=50";
+    const sm = window.matchMedia('(max-width: 576px)');
+    const line = lines[i];
+    const dataId = line?.dataset?.id ? Number(line.dataset.id) : i;
 
-    if(i===8 || i===9 || i===10) {
-      point = "65%";
+    if (dataId === 13) point = "center-=50";
+    if (dataId === 8 || dataId === 9 || dataId === 10) point = "65%";
+    if (sm.matches) {
+      point = "75%";
+      if (dataId === 13) point = "75%-=50";
     }
 
     ScrollTrigger.create({
-        trigger: lines[i],
-        start: ()=> `top ${point}`,
-        end: ()=>`bottom ${point}`,
-        scrub: true,
-        onUpdate: self => {
-            // Вычислить процент прокрутки
-            const progress = self.progress.toFixed(2);
-            // Установить drawSVG в зависимости от прогресса
-            gsap.to(path, {
-                drawSVG: `0 ${progress * 100}%`,
-                duration: 0.1,
-                ease: "none"
-            });
-        },  
-
-        // markers: true,
+      trigger: lines[i],
+      start: () => `top ${point}`,
+      end: () => `bottom ${point}`,
+      scrub: true,
+      onUpdate: self => {
+        const progress = self.progress.toFixed(2);
+        gsap.to(path, {
+          drawSVG: `0 ${progress * 100}%`,
+          duration: 0.1,
+          ease: "none"
+        });
+      },
+      markers: false,
     });
   });
 }

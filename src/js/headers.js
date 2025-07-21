@@ -4,12 +4,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+export const animate = () => {
 
-
-
-
-export const animateHeaders = () => {
-
+    let point = "center";
+    const sm = window.matchMedia('(max-width: 576px)');
+    if (sm.matches) {
+      point = "75%";
+    }
 
 
   document.querySelectorAll('.chapter .h1').forEach((heading) => {
@@ -55,7 +56,7 @@ export const animateHeaders = () => {
     // 5. ScrollTrigger для появления слов и обратной анимации
     ScrollTrigger.create({
       trigger: heading,
-      start: 'top center',
+      start: `top ${point}`,
       onEnter: () => {
         gsap.killTweensOf(words); // Убиваем предыдущие анимации, если есть
         gsap.to(words, {
@@ -106,7 +107,7 @@ export const animateHeaders = () => {
       // ScrollTrigger для рисования линии и обратной анимации
       ScrollTrigger.create({
         trigger: heading,
-        start: 'top center',
+        start: `top ${point}`,
         onEnter: () => {
           gsap.to(underline, {
             scaleX: 1,
@@ -185,7 +186,7 @@ export const animateHeaders = () => {
     // 5. ScrollTrigger для появления слов и обратной анимации
     ScrollTrigger.create({
       trigger: heading,
-      start: 'top center',
+      start: `top ${point}`,
       onEnter: () => {
         gsap.killTweensOf(words); // Убиваем предыдущие анимации, если есть
         gsap.to(words, {
@@ -236,7 +237,7 @@ export const animateHeaders = () => {
       // ScrollTrigger для рисования линии и обратной анимации
       ScrollTrigger.create({
         trigger: heading,
-        start: 'top center',
+        start: `top ${point}`,
         onEnter: () => {
           gsap.to(underline, {
             scaleX: 1,
@@ -264,3 +265,15 @@ export const animateHeaders = () => {
     
   });
 };
+
+export const animateHeaders = () => {
+  // Надёжный запуск animateHeaders после полной загрузки шрифтов и layout
+  document.fonts.ready.then(() => {
+      // requestAnimationFrame(() => {
+      //     setTimeout(() => {
+      //         animate();
+      //     }, 30);
+      // });
+      animate();
+  });
+}
