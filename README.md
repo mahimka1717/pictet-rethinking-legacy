@@ -24,4 +24,4 @@
 ### Notes
 - The `dist/` folder is committed to the repository.
 - Remove `robots.txt` from `dist/` after build. This file is used to control search engine indexing (see [robots.txt documentation](https://developer.mozilla.org/en-US/docs/Web/Robots_txt)).
-- `dist/demo_files/` — page resources
+- `dist/demo_files/`  — page resources
