@@ -1,12 +1,6 @@
 @use 'mixins' as *
 @use 'variables' as *
 
-
-// .o-cookie-message
-    // bottom: unset
-    // top: calc(100vh - 284px)
-
-
 .split-word
     will-change: transform, opacity
     display: inline-block
@@ -58,9 +52,9 @@ mark
     -webkit-font-smoothing: antialiased
     position: relative
     background: $bg-color
-    padding: 0 0 80px 0px
+    padding: 0 0 80px 80px
     margin-bottom: -130px
-    opacity: 0
+    
     @include mbp-down(sm)
         padding: 62px 0 0 0
 

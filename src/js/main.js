@@ -266,9 +266,9 @@ const init = () => {
         animateQuote();
         animateHeaders();
 
-        gsap.to('.article', {
+        gsap.to('#ag-infographic', {
             opacity: 1,
-            duration: 0.5,
+            duration: 0.75,
             ease: 'power2.out',
             onComplete: () => {
                 ScrollTrigger.refresh();

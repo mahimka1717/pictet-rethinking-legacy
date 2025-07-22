@@ -39,6 +39,8 @@
     }
     // Insert HTML into the container
     container.innerHTML = articleHtml;
+    // Set opacity to 0
+    container.style.opacity = '0';
     // console.log('✅ Article HTML injected into #ag-infographic');
   }
 
