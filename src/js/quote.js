@@ -21,7 +21,11 @@ export const animateQuote = () => {
       const blockquote = quote.querySelector('blockquote');
       const author = quote.querySelector('.author');
       
-
+      if (sm.matches) {
+        // Удалить все <br> внутри blockquote для мобильных
+        const brs = blockquote.querySelectorAll('br');
+        brs.forEach(br => br.parentNode.removeChild(br));
+      }
 
 
       // 1. Анимация SVG кавычек
