@@ -227,19 +227,15 @@ const animateText = () => {
 
 
 
-
-document.addEventListener("DOMContentLoaded", async () => {
- gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+const init = () => {
+    
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
     gsap.config({
         force3D: !isIOS,
         // nullTargetWarn: false,
     });
 
-
-
-
     gsap.delayedCall(0, () => {
-
 
         gsap.set([
         `.h1`,
@@ -248,7 +244,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         `.intro-p`,
         // `.outtro-p`,
         ], { opacity: 0 })
-
 
         createScrollSmoother();
 
@@ -260,10 +255,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         animateQuote();
         animateHeaders();
 
-
-
-
-
         gsap.to('.article', {
             opacity: 1,
             duration: 0.5,
@@ -274,5 +265,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
     });
-    
-});
+
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
