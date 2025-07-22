@@ -6,16 +6,12 @@
 
   // Configuration of resource paths
   const config = {
-    cssFile: './static/index.css',
-    jsFile: './static/index.js'
+    cssFile: 'https://ft-shorthand-prod-eu.s3.amazonaws.com/partnercontent/pictet/rethinking-legacy/dist/assets/index.css',
+    jsFile: 'https://ft-shorthand-prod-eu.s3.amazonaws.com/partnercontent/pictet/rethinking-legacy/dist/assets/index.js'
   };
   
   // HTML fragments (will be replaced during build)
-  const sceneHtml = `@scene`;
-  const sectionsHtml = `@sections`;
-  
-  // Protect variables from being removed by the bundler
-  window.LOOMIS_EMBED_DATA = { sceneHtml, sectionsHtml };
+  const articleHtml = `@article`;
 
   // Add CSS file to the end of head
   function addCSS() {
@@ -29,54 +25,21 @@
   }
 
   // Add scene right after body
-  function addScene() {
-    // Check if there is HTML for the scene
-    if (!sceneHtml || sceneHtml === '@scene') {
-      console.warn('Scene HTML not found');
+  function addArticle() {
+    // Check if there is HTML for the article
+    if (!articleHtml || articleHtml === '@article') {
+      console.warn('Article HTML not found');
       return;
     }
-    
-    // Create temporary element for parsing HTML
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = sceneHtml;
-    
-    // Insert elements right after the opening body tag
-    while (tempDiv.firstChild) {
-      document.body.insertBefore(tempDiv.firstChild, document.body.firstChild);
-    }
-    
-    // console.log('✅ Scene added to document');
-  }
-
-  // Add sections to the element where this script is located
-  function addSections() {
-    // Check if there is HTML for sections
-    if (!sectionsHtml || sectionsHtml === '@sections') {
-      console.warn('Sections HTML not found');
+    // Find the target container
+    const container = document.getElementById('ag-infographic');
+    if (!container) {
+      console.warn("Element with id 'ag-infographic' not found");
       return;
     }
-    
-    // Find current script
-    const currentScript = document.currentScript || 
-      document.querySelector('script[src*="inject.js"]') ||
-      document.querySelector('script[src*="embed.js"]') ||
-      document.scripts[document.scripts.length - 1];
-    
-    if (currentScript && currentScript.parentElement) {
-      // Create temporary element for parsing HTML
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = sectionsHtml;
-      
-      // Insert elements at the very beginning of parent element
-      const parentElement = currentScript.parentElement;
-      while (tempDiv.firstChild) {
-        parentElement.insertBefore(tempDiv.firstChild, parentElement.firstChild);
-      }
-      
-      // console.log('✅ Sections added to:', parentElement);
-    } else {
-      console.warn('Could not find parent element for sections');
-    }
+    // Insert HTML into the container
+    container.innerHTML = articleHtml;
+    // console.log('✅ Article HTML injected into #ag-infographic');
   }
 
   // Add JS file to the end of body
@@ -105,10 +68,7 @@
       addCSS();
       
       // Add scene right after body
-      addScene();
-      
-      // Add sections to parent element of script
-      addSections();
+      addArticle();
       
       // Add JS to the end of body
       addJS();
