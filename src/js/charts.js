@@ -433,7 +433,7 @@ const animateChart3 = () => {
         trigger: chart,
         endTrigger: chart,
         start: `top+=${i * 20} ${point}`,
-        end: `top+=${i * 20 + 100} ${point}`,
+        end: `top+=${i * 20 + (sm.matches ? 300 : 100)} ${point}`,
         scrub: true,
       }
     });
@@ -675,7 +675,7 @@ const animateChart5 = () => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: svg,
-      start: `top ${point}+=10%`,
+      start: `top ${point + (sm.matches ? '-=30%' : '+=10%')}`,
       end: `center ${point}`,
       scrub: true,
     }

@@ -43,13 +43,13 @@ const createScrollSmoother = () => {
     
     smoother = ScrollSmoother.create({
         smooth: 2, // Увеличенная плавность (медленнее прокрутка)
-        smoothTouch: 2,
+        smoothTouch: 1,
         // smoothTouch: isIOS?0.5:false, // Плавность для сенсорных устройств
         effects: true, // window.innerWidth > md ? true : false, // Включаем эффекты только для больших экранов
-        normalizeScroll: {
-            allowNestedScroll: true, // позволяет вложенную прокрутку
-            type: "pointer,touch,wheel"
-        },
+        // normalizeScroll: {
+        //     allowNestedScroll: true, // позволяет вложенную прокрутку
+        //     type: "pointer,touch,wheel"
+        // },
         ignoreMobileResize: true,
     });
 
