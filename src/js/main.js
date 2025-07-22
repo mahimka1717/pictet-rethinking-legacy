@@ -235,7 +235,7 @@ const init = () => {
         // nullTargetWarn: false,
     });
 
-    gsap.delayedCall(0, () => {
+    gsap.delayedCall(0.1, () => {
 
         gsap.set([
         `.h1`,
