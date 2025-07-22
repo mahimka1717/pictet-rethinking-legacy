@@ -99,6 +99,8 @@ function ftFixSmoother() {
     gsap.set(sOff, { clearProps: "all" });
     gsap.set(sOff, { bottom: `unset`, top: 0 });
 
+    const cookie = document.querySelector('.o-cookie-message');
+
     const nav = document.querySelector('.nav');
 
     ScrollTrigger.create({
@@ -108,6 +110,15 @@ function ftFixSmoother() {
       pin: true,
       pinSpacing: false,
   })
+
+//     ScrollTrigger.create({
+//       trigger: '.article',
+//       start: 'bottom+=20 bottom',
+//       end: 'bottom+=100000 bottom',
+//       pin: cookie,
+//       pinSpacing: false,
+//       markers: true
+//   })
 
 
   const sm = window.matchMedia('(max-width: 576px)');
@@ -127,7 +138,7 @@ function ftFixSmoother() {
     //   markers: true
   })
 
-      ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: nav,
       start: 'center center',
       end: '+=100000 top',
