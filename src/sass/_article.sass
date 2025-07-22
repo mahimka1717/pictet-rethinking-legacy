@@ -69,6 +69,8 @@ mark
         background-attachment: fixed
         opacity: 0.3 // прозрачность 30%
         pointer-events: none // чтобы не блокировать клики
+        @include mbp-down(sm)
+            background-size: 256px 256px
 
     .article-wrapper
         width: 1260px
