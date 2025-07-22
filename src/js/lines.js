@@ -5,6 +5,11 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
 
+const sm = window.matchMedia('(max-width: 575px)');
+const lg = window.matchMedia('(max-width: 1299px)');
+let point = "center";
+
+
 export const animateLines = () => {
     // console.log('animateLines');
   // Найти все .line на странице
@@ -28,14 +33,12 @@ export const animateLines = () => {
 
 
   paths.forEach((path, i) => {
-    let point = "center";
-    const sm = window.matchMedia('(max-width: 576px)');
     const line = lines[i];
     const dataId = line?.dataset?.id ? Number(line.dataset.id) : i;
 
     if (dataId === 13) point = "center-=50";
     if (dataId === 8 || dataId === 9 || dataId === 10) point = "65%";
-    if (sm.matches) {
+    if (lg.matches) {
       point = "75%";
       if (dataId === 13) point = "75%-=50";
     }

@@ -3,14 +3,14 @@
 
 .chart
     position: absolute
-    @include mbp-down(sm)
+    @include mbp-down(lg)
         position: relative
 
     &[data-id="1"]
         top: 46.9375rem
         left: 11rem
         width: 840px
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             top: unset
             left: unset
             width: 100%
@@ -19,7 +19,7 @@
         .chart__svg
             width: 100%
             margin: 0 auto
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 min-width: unset
                 max-width: 100%
                 width: 100%
@@ -30,7 +30,7 @@
             width: 100%
             box-sizing: border-box
             height: 438px
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 height: 428px
 
         .chart__y-axis
@@ -45,7 +45,7 @@
             min-width: 1rem
             padding-top: 18px
             font-family: $font-primary
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 margin-right: 0.25rem
 
         .chart__svg-wrapper
@@ -62,7 +62,7 @@
             width: 841px
             height: 359px
             margin-bottom: 0.55rem
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 width: 100%
                 max-width: 841px
                 height: 359px
@@ -77,7 +77,7 @@
             margin-bottom: 23px
             padding: 0 1.5rem
             font-family: $font-primary
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 font-size: 0.75rem
                 padding: 0 0.5rem
                 margin-bottom: 13px
@@ -91,7 +91,7 @@
             max-height: 375px
             position: relative
             margin-right: 18px
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 margin-right: 0px
 
             .chart__y-label
@@ -109,7 +109,7 @@
             margin-bottom: 2rem
             color: $primary-color
             font-family: $font-primary
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 margin-bottom: 1.0rem
 
         .chart__svg-texts
@@ -125,7 +125,7 @@
             font-weight: 400
             color: $primary-color
             line-height: 120%
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 min-width: unset
                 max-width: 100%
                 width: 100%
@@ -146,7 +146,7 @@
     &[data-id="2"]
         top: 72.75rem
         left: 18.5rem
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             top: unset
             left: unset
             z-index: 1
@@ -162,7 +162,7 @@
                 max-width: 42rem
 
             .chart__svg
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     margin-bottom: unset
                 .chart_2_shadow
                     position: absolute
@@ -170,7 +170,7 @@
                     left: 0rem
 
             .swiper
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     max-width: 16.875rem
                     position: absolute
                     z-index: 10
@@ -180,7 +180,7 @@
                     
                 .swiper-wrapper
                     display: flex
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         flex-direction: row
                         width: 100%
                         
@@ -189,7 +189,7 @@
                         position: absolute
                         flex-shrink: 0
                         width: 100%
-                        @include mbp-down(sm)
+                        @include mbp-down(lg)
                             position: relative
                             flex-direction: column
                             width: 16.875rem
@@ -204,21 +204,21 @@
                         &[data-id="1"]
                             left: -17rem
                             top: 19rem
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 left: unset
                                 top: unset
                             
                         &[data-id="2"]
                             left: 27rem
                             top: 29rem
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 left: unset
                                 top: unset
                         
                         &[data-id="3"]
                             left: -4rem
                             top: 48rem
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 left: unset
                                 top: unset
 
@@ -234,7 +234,7 @@
                             margin-right: 0.62rem
                             width: 260px
                             text-align: right
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 font-size: 6.25rem
                                 width: 100%
                                 margin-right: unset
@@ -253,15 +253,15 @@
                                 line-height: 120%
                                 &[data-id="1"]
                                     width: 14.6875rem
-                                    @include mbp-down(sm)
+                                    @include mbp-down(lg)
                                         width: 100%
                                 &[data-id="2"]
                                     width: 14.5625rem
-                                    @include mbp-down(sm)
+                                    @include mbp-down(lg)
                                         width: 100%
                                 &[data-id="3"]
                                     width: 20.375rem
-                                    @include mbp-down(sm)
+                                    @include mbp-down(lg)
                                         width: 100%
                             .chart__source
                                 color: $primary-color
@@ -301,7 +301,7 @@
     &[data-id="3"]
         top: 58.6255rem
         left: 11rem
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             top: unset
             left: unset
             // margin-bottom: 18rem
@@ -312,14 +312,14 @@
                 color: $tertiary-color
 
             .chart__subtitle
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     margin-bottom: 3.38rem
                 
 
             .chart__svg
                 width: 910px
                 height: 411px
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     width: 100%
                 svg
                     opacity: 0.5
@@ -338,7 +338,7 @@
                         max-width: 183px
                         padding-right: 20px
                         padding-top: 5px
-                        @include mbp-down(sm)
+                        @include mbp-down(lg)
                             max-width: 5.25rem
                             padding-right: 0.5rem
 
@@ -351,14 +351,14 @@
                             line-height: normal
                             text-transform: uppercase
                             margin-bottom: 1.5rem
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 margin-bottom: 1.125rem
 
                         .chart3__yaxis
                             display: flex
                             flex-direction: column
                             gap: 3.5rem
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 gap: 3.25rem
 
                             .chart3__yaxis_tick
@@ -368,12 +368,12 @@
                                 font-style: normal
                                 font-weight: 400
                                 line-height: normal
-                                @include mbp-down(sm)
+                                @include mbp-down(lg)
                                     font-size: 0.75rem
 
                     .divchart__right
                         width: 100%
-                        @include mbp-down(sm)
+                        @include mbp-down(lg)
                             padding-right: 2rem
                         .chart3__chart
                             position: relative
@@ -382,7 +382,7 @@
                             border-left: 1px solid #3E3E3E
                             border-bottom: 1px solid #3E3E3E
                             margin-bottom: 10px
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 width: 100%
 
                         .chart3__legend
@@ -392,7 +392,7 @@
                             gap: 1.125rem
                             top: 29px
                             right: 88px
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 right: -2rem
                                 top: -2.0rem
                                 gap: 0.5rem
@@ -400,13 +400,13 @@
                                 display: flex
                                 align-items: center
                                 gap: 0.83rem
-                                @include mbp-down(sm)
+                                @include mbp-down(lg)
                                     gap: 0.6rem
                                 .chart3__legend_color
                                     width: 1.3rem
                                     height: 1.3rem
                                     border: 1px solid #3E3E3E
-                                    @include mbp-down(sm)
+                                    @include mbp-down(lg)
                                         width: 0.81rem
                                         height: 0.81rem
                                         
@@ -465,7 +465,7 @@
                                             font-style: normal
                                             font-weight: 400
                                             line-height: normal
-                                            @include mbp-down(sm)
+                                            @include mbp-down(lg)
                                                 left: 5px
 
                             [data-id="1"]
@@ -500,7 +500,7 @@
                             width: 668px
                             justify-content: space-between
                             margin-bottom: 1rem
-                            @include mbp-down(sm)
+                            @include mbp-down(lg)
                                 width: 100%
 
                             .chart3__xaxis_tick
@@ -527,7 +527,7 @@
     &[data-id="4"]
         top: 35.1255rem
         left: 11rem
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             top: unset
             left: unset
 
@@ -538,26 +538,26 @@
             .chart__title
                 text-align: center
                 margin-bottom: 1.75rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     margin-bottom: 0.19rem
             .chart__subtitle
                 text-align: center
                 max-width: 27.65rem
             .chart__source
                 margin-bottom: 3.375rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     margin-bottom: 19px
                 
             .chart__svg
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     margin-bottom: 40px
                 .chart3__desktop
                     display: block
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         display: none
                 .chart3__mobile
                     display: none
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         display: block
                         width: 100%
 
@@ -572,7 +572,7 @@
     &[data-id="5"]
         top: 106.4375rem
         left: 3.75rem
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             top: unset
             left: unset
             // margin-bottom: 33rem
@@ -584,18 +584,18 @@
                 position: absolute
                 top: 8rem
                 left: 21rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     top: unset
                     left: unset
 
                 .chart5__desktop
                     display: block
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         display: none
                 .chart5__mobile
                     display: none
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         display: block
                         width: 100%
                 
@@ -606,7 +606,7 @@
     &[data-id="6"]
         top: calc(28.625rem + 176px)
         left: 26rem
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             top: unset
             left: unset
             margin-bottom: 4rem
@@ -623,7 +623,7 @@
             .chart__subtitle
                 text-align: center
                 max-width: 27.5rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     margin-bottom: 3.88rem
 
             .chart__svg
@@ -631,7 +631,7 @@
                 height: 40rem
                 margin-bottom: 1.375rem
                 margin-right: 0.5rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: 30rem
                     margin-bottom: 6.08rem
                     
@@ -639,27 +639,27 @@
             .chart__caption
                 display: flex
                 position: absolute
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     
                 &[data-id="1"]
                     left: -22.25rem
                     top: 16.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                         margin-bottom: 1rem
                 &[data-id="2"]
                     left: -22.25rem
                     top: 26.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                         margin-bottom: 1rem
                 &[data-id="3"]
                     left: -22.25rem
                     top: 36.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                 &[data-id="4"]
@@ -667,7 +667,7 @@
                     top: 16.25rem
                     .chart__caption_value
                         color: $subheader-color
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                         margin-bottom: 1rem
@@ -676,7 +676,7 @@
                     top: 26.25rem
                     .chart__caption_value
                         color: $subheader-color
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                         margin-bottom: 1rem
@@ -685,7 +685,7 @@
                     top: 36.25rem
                     .chart__caption_value
                         color: $subheader-color
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                         margin-bottom: 1rem
@@ -701,7 +701,7 @@
                     line-height: 100%
                     margin-right: 0.62rem
                     width: 182px
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         font-size: 4.375rem
                         width: 8.873rem
 
@@ -715,7 +715,7 @@
                     font-weight: 400
                     line-height: 120%
                     width: 15.75rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         font-size: 1.125rem
                         width: 100%
                         max-width: 12rem
@@ -730,7 +730,7 @@
                 font-style: normal
                 font-weight: 400
                 line-height: normal
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     top: unset
                     left: unset
@@ -749,7 +749,7 @@
                 font-weight: 400
                 line-height: normal
                 width: 8rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     top: unset
                     left: unset
@@ -768,7 +768,7 @@
                 font-weight: 400
                 line-height: 1.4375rem
                 width: 18rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     top: unset
                     left: unset
@@ -787,7 +787,7 @@
             font-weight: 400
             line-height: normal
             margin-bottom: 0rem
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 font-size: 1.5625rem
 
         .chart__subtitle
@@ -798,7 +798,7 @@
             font-weight: 400
             line-height: normal
             margin-bottom: 1.75rem
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 font-size: 1.125rem
 
         .chart__svg
@@ -814,7 +814,7 @@
             font-style: normal
             font-weight: 400
             line-height: 187%
-            @include mbp-down(sm)
+            @include mbp-down(lg)
                 font-size: 0.75rem
 
             a

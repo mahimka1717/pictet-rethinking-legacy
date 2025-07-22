@@ -13,9 +13,10 @@ const ids = [
     // "12", "13", "14", "15", "16", "18", "19", "20", "21"
 ];
 
-const sm = window.matchMedia('(max-width: 576px)');
+const sm = window.matchMedia('(max-width: 575px)');
+const lg = window.matchMedia('(max-width: 1299px)');
 let point = "center";
-if (sm.matches) {
+if (lg.matches) {
   point = "75%";
 }
 

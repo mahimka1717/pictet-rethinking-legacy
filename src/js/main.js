@@ -17,6 +17,9 @@ const xl = 1440;
 const md = 740;
 let resizeTimer;
 
+const sm = window.matchMedia('(max-width: 575px)');
+const lg = window.matchMedia('(max-width: 1299px)');
+
 // smoother
 const createScrollSmoother = () => {
     
@@ -56,7 +59,6 @@ const createScrollSmoother = () => {
     ftFixSmoother();
 };
 
-
 function createSmoothScrollStructure() {
   const body = document.body;
 
@@ -91,7 +93,6 @@ function createSmoothScrollStructure() {
   body.appendChild(smoothWrapper);
 }
 
-
 function ftFixSmoother() {
 
     const sOff = document.querySelector('.pictet-sign-off');
@@ -121,9 +122,9 @@ function ftFixSmoother() {
 //   })
 
 
-  const sm = window.matchMedia('(max-width: 576px)');
+ 
   let end = 'top+=77 bottom'
-  if (sm.matches) {
+  if (lg.matches) {
     end = 'top bottom'
   }
 
@@ -149,10 +150,6 @@ function ftFixSmoother() {
 
 
 }
-
-
-
-
 
 const handleResize = () => {
     clearTimeout(resizeTimer);
@@ -207,8 +204,8 @@ const animateText = () => {
     // Сначала выставляем opacity 0
     gsap.set(el, { opacity: 0 });
     let point = "center";
-    const sm = window.matchMedia('(max-width: 576px)');
-    if (sm.matches) {
+    
+    if (lg.matches) {
       point = "75%";
     }
 

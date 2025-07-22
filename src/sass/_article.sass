@@ -21,7 +21,6 @@ mark
     width: auto
     white-space: normal
 
-
     .underline-anim
         position: absolute
         left: 0
@@ -52,10 +51,12 @@ mark
     -webkit-font-smoothing: antialiased
     position: relative
     background: $bg-color
-    padding: 0 0 80px 80px
+    // padding: 0 0 80px 80px
+    padding: 0 0 80px 0px
     margin-bottom: -130px
-    
-    @include mbp-down(sm)
+    @media (max-width: 1180px)
+        padding: 80px 0 0 0
+    @media (max-width: 414px)
         padding: 62px 0 0 0
 
     &::before
@@ -71,7 +72,7 @@ mark
         opacity: 0.3 // прозрачность 30%
         // opacity: 1
         pointer-events: none // чтобы не блокировать клики
-        @include mbp-down(sm)
+        @include mbp-down(lg)
             // background-size: 128px 128px
             // opacity: 0
             background-size: 512px 512px
@@ -82,9 +83,11 @@ mark
         height: 13670px
         padding: 20px
         position: relative
-
-        @include mbp-down(xl)
+        @include mbp-down(lg)
             width: 100%
+            max-width: 500px
+            height: unset
+            pdding: 2rem
         @include mbp-down(sm)
             height: unset
             padding: 1rem
@@ -104,7 +107,7 @@ mark
 
             &[data-id="0"]
                 height: 60.4375rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: unset
                     padding-top: 5.88rem
                     // padding-bottom: 19.38rem
@@ -112,23 +115,23 @@ mark
 
             &[data-id="1"]
                 height: calc(164rem + 7.45rem)
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: unset
                 .h2
                     left: 18.25rem
                     width: 42.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         width: 100%
 
             &[data-id="2"]
                 height: 156rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: unset
                 .h2
                     left: 18.25rem
                     width: 40.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         width: 100%
                         margin-bottom: unset
@@ -136,34 +139,34 @@ mark
 
             &[data-id="3"]
                 height: 130rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: unset
                 .h2
                     left: 24.25rem
                     width: 30.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         width: 100%
 
             &[data-id="4"]
                 height: 149rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: unset
                 .h2
                     left: 18.25rem
                     width: 42.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         width: 100%
 
             &[data-id="5"]
                 height: 177rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     height: unset
                 .h2
                     left: 19.25rem
                     width: 40.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         width: 100%
 
@@ -172,7 +175,7 @@ mark
                 left: 136px
                 top: 175px
                 width: 62.6875rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     left: unset
                     top: unset
@@ -208,17 +211,19 @@ mark
                     z-index: 1
                     font-kerning: none 
                     text-rendering: optimizeSpeed
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         font-size: 2.5rem
-                        max-width: 350px
+                        max-width: 450px
                         margin: 0 auto
+                    @include mbp-down(sm)
+                        max-width: 350px
                         
 
                         // margin-bottom: 4.12rem
 
                     br
                         // display: none
-                        @include mbp-down(sm)
+                        @include mbp-down(lg)
                             display: none
 
                     .subheader
@@ -231,7 +236,7 @@ mark
                         font-weight: 700
                         line-height: 120%
                         display: block
-                        @include mbp-down(sm)
+                        @include mbp-down(lg)
                             margin-bottom: 0.5rem
 
                     mark
@@ -250,7 +255,7 @@ mark
                         text-underline-offset: auto
                         text-underline-position: from-font
                         background: transparent
-                        @include mbp-down(sm)
+                        @include mbp-down(lg)
                             font-size: 2.5rem
                             text-decoration-thickness: 2px
 
@@ -268,7 +273,7 @@ mark
                 font-weight: 400
                 line-height: 120%
                 text-wrap: stable
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     font-size: 1.5rem
                     position: relative
                     left: unset
@@ -305,7 +310,7 @@ mark
                 text-align: center
                 font-kerning: none 
                 text-rendering: optimizeSpeed
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     top: unset
                     left: unset
@@ -318,7 +323,7 @@ mark
                     font-size: 1.875rem
                     font-style: italic
                     font-weight: 700
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         font-size: 1.25rem
                 mark
                     display: inline-block
@@ -341,7 +346,7 @@ mark
                 font-weight: 400
                 line-height: 2.1875rem
                 position: absolute
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     font-size: 1.125rem
                     line-height: 1.875rem
@@ -354,7 +359,7 @@ mark
                     left: 18rem
                     top: 11.38rem
                     width: 42.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                     //     margin-bottom: 39rem
 
@@ -362,7 +367,7 @@ mark
                     left: 48rem
                     top: 88.88rem
                     width: 27.4375rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 39rem
 
@@ -370,7 +375,7 @@ mark
                     left: 18rem
                     top: calc(88.88rem + 53.38rem + 7.45rem)
                     width: 45.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 23rem
 
@@ -383,7 +388,7 @@ mark
                     left: 18rem
                     top: 54.37rem
                     width: 42.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 7rem
 
@@ -396,7 +401,7 @@ mark
                     left: 18rem
                     top: 11.38rem
                     width: 42.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 28rem
 
@@ -404,7 +409,7 @@ mark
                     left: 40rem
                     top: 24.81rem
                     width: 34.9375rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 20rem
 
@@ -412,7 +417,7 @@ mark
                     left: 40rem
                     top: 102.12rem
                     width: 27.625rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 8rem
 
@@ -425,7 +430,7 @@ mark
                     left: 11rem
                     top: 17.625rem
                     width: 56.875rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 23rem
 
@@ -438,7 +443,7 @@ mark
                     left: 18rem
                     top: 91rem
                     width: 42.125rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 4rem
                         // margin-bottom: 2rem
 
@@ -451,7 +456,7 @@ mark
                     left: 18rem
                     top: calc(8.4rem + 245px + 36px)
                     width: 42.25rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         padding-bottom: 0rem
                         // margin-bottom: 2rem
 
@@ -489,7 +494,7 @@ mark
                 &[data-id="14"],
                 &[data-id="15"],
                 &[data-id="16"]
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         left: unset
                         top: unset
                         width: 100%
@@ -508,7 +513,7 @@ mark
                 font-style: normal
                 font-weight: 400
                 line-height: 120%
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     left: unset
                     top: unset
@@ -536,7 +541,7 @@ mark
                 align-items: center
                 width: 42.25rem
                 left: 18rem
-                @include mbp-down(sm)
+                @include mbp-down(lg)
                     position: relative
                     left: unset
                     width: 100%
@@ -544,7 +549,7 @@ mark
                 svg
                     position: relative
                     margin-bottom: 2.19rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         margin-bottom: 1rem
 
                 blockquote
@@ -559,7 +564,7 @@ mark
                     line-height: 187%
                     margin-bottom: 0.75rem
                     width: 100%
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         font-size: 1.5rem
                         margin-bottom: 1rem
                         line-height: 150%
@@ -567,7 +572,7 @@ mark
                         display: none
 
                     // br
-                    //     @include mbp-down(sm)
+                    //     @include mbp-down(lg)
                     //         display: none
 
                 .author
@@ -582,20 +587,20 @@ mark
                     line-height: 120%
                     max-width: 20.25rem
                     width: 100%
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         font-size: 0.9375rem
                         max-width: 300px
 
                 &[data-id="0"]
                     top: 125.45rem
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         top: unset  
                     blockquote
                         max-width: 36.25rem
 
                 &[data-id="1"]
                     top: calc(105rem + 176px)
-                    @include mbp-down(sm)
+                    @include mbp-down(lg)
                         top: unset
                     blockquote
                         max-width: 40.25rem

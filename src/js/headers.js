@@ -6,11 +6,12 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export const animate = () => {
 
-    let point = "center";
-    const sm = window.matchMedia('(max-width: 576px)');
-    if (sm.matches) {
-      point = "75%";
-    }
+const sm = window.matchMedia('(max-width: 575px)');
+const lg = window.matchMedia('(max-width: 1299px)');
+let point = "center";
+if (lg.matches) {
+  point = "75%";
+}
 
 
   document.querySelectorAll('.chapter .h1').forEach((heading) => {

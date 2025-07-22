@@ -8,9 +8,10 @@ import { Pagination } from 'swiper/modules';
 
 
 
-const sm = window.matchMedia('(max-width: 576px)');
+const sm = window.matchMedia('(max-width: 575px)');
+const lg = window.matchMedia('(max-width: 1299px)');
 let point = "center";
-if (sm.matches) {
+if (lg.matches) {
   point = "75%";
 }
 
@@ -308,7 +309,7 @@ const animateChart2 = () => {
   );
 
 
-  if (!sm.matches) {
+  if (!lg.matches) {
     // Анимация SVG внутри chart__caption (без враппера)
     const captions = chart.querySelectorAll('.chart__caption');
     if (!captions) return;
@@ -352,7 +353,7 @@ const animateChart2 = () => {
 
 
 
-  if (sm.matches) {
+  if (lg.matches) {
     const swiperEl = chart.querySelector('.swiper');
     if (swiperEl && swiperEl.querySelector('.swiper-slide')) {
       const link = document.createElement('link');
@@ -418,10 +419,10 @@ const animateChart3 = () => {
     value.textContent = '0%';
 
 
-    const sm = window.matchMedia('(max-width: 576px)');
+
     let a = document.querySelector('.chart3__chart');
     let wd = 668
-    if (sm.matches) {
+    if (lg.matches) {
       wd = a.offsetWidth;
     }
 
@@ -480,7 +481,7 @@ const animateChart4 = () => {
 
   let svg = chart.querySelector('.chart3__desktop');
 
-  if (sm.matches) {
+  if (lg.matches) {
     svg = chart.querySelector('.chart3__mobile');
   }
   if (!svg) return;
@@ -597,7 +598,7 @@ const animateChart5 = () => {
   );
 
   let svg = chart.querySelector('.chart5__desktop');
-  if (sm.matches) {
+  if (lg.matches) {
     svg = chart.querySelector('.chart5__mobile');
   }
 
@@ -618,7 +619,7 @@ const animateChart5 = () => {
   let cx = 220, cy = 216, r = 132; // центр и радиус
 
   
-  if (sm.matches) {
+  if (lg.matches) {
     cx = 89+77, cy = 78+77, r = 77;
   }
 

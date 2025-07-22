@@ -6,8 +6,9 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 
 let point = "center";
-const sm = window.matchMedia('(max-width: 576px)');
-if (sm.matches) {
+const sm = window.matchMedia('(max-width: 575px)');
+const lg = window.matchMedia('(max-width: 1299px)');
+if (lg.matches) {
   point = "75%";
 }
 
@@ -21,7 +22,7 @@ export const animateQuote = () => {
       const blockquote = quote.querySelector('blockquote');
       const author = quote.querySelector('.author');
       
-      if (sm.matches) {
+      if (lg.matches) {
         // Удалить все <br> внутри blockquote для мобильных
         const brs = blockquote.querySelectorAll('br');
         brs.forEach(br => br.parentNode.removeChild(br));
