@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
 const sm = window.matchMedia('(max-width: 575px)');
 const lg = window.matchMedia('(max-width: 1299px)');
-let point = "center";
+let point = "60%";
 
 
 export const animateLines = () => {
@@ -36,8 +36,8 @@ export const animateLines = () => {
     const line = lines[i];
     const dataId = line?.dataset?.id ? Number(line.dataset.id) : i;
 
-    if (dataId === 13) point = "center-=50";
-    if (dataId === 8 || dataId === 9 || dataId === 10) point = "65%";
+    if (dataId === 8 || dataId === 9 || dataId === 10) point = "75%";
+    if (dataId === 13) point = "60%-=50";
     if (lg.matches) {
       point = "75%";
       if (dataId === 13) point = "75%-=50";
@@ -56,7 +56,7 @@ export const animateLines = () => {
           ease: "none"
         });
       },
-      markers: false,
+      // markers: true,
     });
   });
 }

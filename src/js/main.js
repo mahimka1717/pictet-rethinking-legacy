@@ -49,10 +49,12 @@ const createScrollSmoother = () => {
         smoothTouch: 1,
         // smoothTouch: isIOS?0.5:false, // Плавность для сенсорных устройств
         effects: true, // window.innerWidth > md ? true : false, // Включаем эффекты только для больших экранов
-        // normalizeScroll: {
-        //     allowNestedScroll: true, // позволяет вложенную прокрутку
-        //     type: "pointer,touch,wheel"
-        // },
+        
+        normalizeScroll: (lg.matches) ? false : {
+            allowNestedScroll: true, // позволяет вложенную прокрутку
+            type: "pointer,touch,wheel"
+        },
+
         ignoreMobileResize: true,
     });
 
@@ -99,9 +101,6 @@ function ftFixSmoother() {
     gsap.killTweensOf(sOff);
     gsap.set(sOff, { clearProps: "all" });
     gsap.set(sOff, { bottom: `unset`, top: 0 });
-
-    const cookie = document.querySelector('.o-cookie-message');
-
     const nav = document.querySelector('.nav');
 
     ScrollTrigger.create({
@@ -111,17 +110,6 @@ function ftFixSmoother() {
       pin: true,
       pinSpacing: false,
   })
-
-//     ScrollTrigger.create({
-//       trigger: '.article',
-//       start: 'bottom+=20 bottom',
-//       end: 'bottom+=100000 bottom',
-//       pin: cookie,
-//       pinSpacing: false,
-//       markers: true
-//   })
-
-
  
   let end = 'top+=77 bottom'
   if (lg.matches) {
@@ -203,7 +191,7 @@ const animateText = () => {
     document.querySelectorAll('.p, .intro-p').forEach(el => {
     // Сначала выставляем opacity 0
     gsap.set(el, { opacity: 0 });
-    let point = "center";
+    let point = "60%";
     
     if (lg.matches) {
       point = "75%";

@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 
 
-let point = "center";
+let point = "60%";
 const sm = window.matchMedia('(max-width: 575px)');
 const lg = window.matchMedia('(max-width: 1299px)');
 if (lg.matches) {

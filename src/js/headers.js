@@ -8,7 +8,7 @@ export const animate = () => {
 
 const sm = window.matchMedia('(max-width: 575px)');
 const lg = window.matchMedia('(max-width: 1299px)');
-let point = "center";
+let point = "60%";
 if (lg.matches) {
   point = "75%";
 }

@@ -10,7 +10,7 @@ import { Pagination } from 'swiper/modules';
 
 const sm = window.matchMedia('(max-width: 575px)');
 const lg = window.matchMedia('(max-width: 1299px)');
-let point = "center";
+let point = "60%";
 if (lg.matches) {
   point = "75%";
 }
@@ -308,7 +308,6 @@ const animateChart2 = () => {
     }
   );
 
-
   if (!lg.matches) {
     // Анимация SVG внутри chart__caption (без враппера)
     const captions = chart.querySelectorAll('.chart__caption');
@@ -330,7 +329,7 @@ const animateChart2 = () => {
             onEnter: () => {
               gsap.to(caption, { opacity: 1, duration: 1, ease: "power1.inOut" });
               gsap.fromTo(valueEl, 
-                { innerText: 30 }, 
+                { innerText: finalValue - 20 }, 
                 {
                   innerText: finalValue,
                   duration: 1,
@@ -350,8 +349,6 @@ const animateChart2 = () => {
       );
     });
   }
-
-
 
   if (lg.matches) {
     const swiperEl = chart.querySelector('.swiper');
@@ -400,64 +397,46 @@ const animateChart3 = () => {
   );
 
   const svg = chart.querySelector('.divchart');
-  // console.log(svg)
-  // Получаем пути и value (текстовые поля)
-  const paths = chart.querySelectorAll('.chart3__bar');
-  const values = chart.querySelectorAll('.chart3__value');
-  const percents = [8, 18, 24, 13, 48, 29];
+const paths = chart.querySelectorAll('.chart3__bar');
+const values = chart.querySelectorAll('.chart3__value');
+const percents = [8, 18, 24, 13, 48, 29];
+const chartWidth = chart.querySelector('.chart3__chart')?.offsetWidth || 668;
 
-  // Анимация по порядку с задержкой
-  paths.forEach((path, i) => {
+paths.forEach((path, i) => {
+  gsap.set(path, { transformOrigin: `0% 50%`, scaleX: 0 });
+  const value = values[i];
+  if (!value) return;
+  let targetValue = 0;
+  const match = (value.textContent || value.innerHTML).match(/([\d.]+)%?/);
+  if (match) targetValue = parseFloat(match[1]);
+  value.textContent = '0%';
 
-    gsap.set(path, { transformOrigin: `0% 50%`, scaleX: 0 });
-    const value = values[i];
-    if (!value) return;
-    let targetValue = 0;
-    let valueText = value.textContent || value.innerHTML;
-    const match = valueText.match(/([\d.]+)%?/);
-    if (match) targetValue = parseFloat(match[1]);
-    value.textContent = '0%';
-
-
-
-    let a = document.querySelector('.chart3__chart');
-    let wd = 668
-    if (lg.matches) {
-      wd = a.offsetWidth;
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: chart,
+      endTrigger: chart,
+      start: `top+=${i * 20} ${point}`,
+      end: `top+=${i * 20 + (sm.matches ? 300 : 100)} ${point}`,
+      scrub: true,
     }
-
-    
-
-    // Анимация пути и value
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: chart,
-        endTrigger: chart,
-        start: `top+=${i * 20} ${point}`,
-        end: `top+=${i * 20 + (sm.matches ? 300 : 100)} ${point}`,
-        scrub: true,
-      }
-    });
-
-    tl.to({}, {
-      duration: 1,
-      ease: 'linear',
-      onUpdate: function() {
-        const prog = this.progress();
-        const val = Math.round(targetValue * prog);
-        value.textContent = val + '%';
-        gsap.set(path, { scaleX: prog });
-
-        const currentX = wd * (percents[i] * 2 / 100) * (1 - prog)
-        
-        // value.style.transform = `translateX(${currentX}px)`;
-        gsap.set(value, { x: -currentX });
-      },
-      onComplete: function() {
-        value.textContent = targetValue + '%';
-      }
-    }, 0);
   });
+
+  tl.to(path, {
+    scaleX: 1,
+    duration: 1,
+    ease: 'linear',
+    onUpdate: function() {
+      const prog = this.progress();
+      const val = Math.round(targetValue * prog);
+      value.textContent = val + '%';
+      const currentX = chartWidth * (percents[i] * 2 / 100) * (1 - prog);
+      gsap.set(value, { x: -currentX });
+    },
+    onComplete: function() {
+      value.textContent = targetValue + '%';
+    }
+  }, 0);
+});
 }
 
 const animateChart4 = () => {
@@ -808,7 +787,7 @@ captions.forEach(caption => {
           ease: "power1.inOut",
           scrollTrigger: {
             trigger: caption2,
-            start: `top ${point}`,
+            start: `top ${point}+=15%`,
             onEnter: () => {
               // gsap.killTweensOf(caption2); // Очищаем предыдущие анимации
               gsap.to(caption2, { opacity: 1, duration: 1, ease: "power1.inOut" });

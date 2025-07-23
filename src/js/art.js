@@ -15,52 +15,54 @@ const ids = [
 
 const sm = window.matchMedia('(max-width: 575px)');
 const lg = window.matchMedia('(max-width: 1299px)');
-let point = "center";
+let point = "60%";
 if (lg.matches) {
   point = "75%";
 }
 
 
-const animateSinglePersons = (ids) => {
 
-  ids.forEach(id => {
-    const el = document.querySelector(`.art[data-id="${id}"]`);
-    if (!el) return;
+const animateSinglePersons = () => {
 
-    // Получаем left относительно .article-wrapper ширины (1260px)
-    const wrapper = document.querySelector('.article-wrapper');
-    const wrapperRect = wrapper.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    const left = 1260 - (elRect.left - wrapperRect.left);
-    const originX = (left / 1260) * 100;
+    // Дельта смещения для анимаций
+    const DELTA = 20;
+    // Массив направлений и соответствующих классов
+    const animConfigs = [
+        { cls: "anim__9", x: -DELTA, y: 0 },      // Слева (9)
+        { cls: "anim__6", x: 0, y: DELTA },       // Снизу (6)
+        { cls: "anim__730", x: -DELTA, y: DELTA },   // Слева снизу (7:30)
+        { cls: "anim__430", x: DELTA, y: DELTA },    // Справа снизу (4:30)
+        { cls: "anim__3", x: DELTA, y: 0 },       // Справа (3)
+        { cls: "anim__1030", x: -DELTA, y: -DELTA },  // Справа сверху (10:30)
+        { cls: "anim__12", x: 0, y: -DELTA },     // Сверху (12)
+        { cls: "anim__130", x: DELTA, y: -DELTA },  // Слева сверху (1:30)
+        { cls: "anim__0", x: 0, y: 0 },  // Слева сверху (1:30)
+    ];
 
-    el.style.transformOrigin = `${originX}% 0%`;
-
-    gsap.set(el, { scale: 1, opacity: 0, y: 0 });
-
-    let start = "top center"
-    let end = "bottom center"
-
-    if(id==="2"){
-        start = "top 75%";
-        end = "bottom 75%";
-    }
-
-    gsap.to(el, {
-      scale: 1,
-      opacity: 1,
-      y: 0,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start: start,
-        end: end,
-        scrub: true,
-        // markers: true // для отладки
-      }
+    animConfigs.forEach(({ cls, x, y }) => {
+        document.querySelectorAll(`.art > img.${cls}`).forEach(img => {
+            // Родитель .art
+            const parent = img.closest('.art');
+            
+            if (!parent) return;
+            gsap.set(img, { opacity: 0, x, y });
+            gsap.to(img, {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                duration: 0.75,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: parent,
+                    start: `top 75%`,
+                    toggleActions: "play none none reverse",
+                    // markers: true // для отладки
+                }
+            });
+        });
     });
-  });
 }
+
 
 const animateSingleBuilding = (ids) => {
     // wrapBuildingArtElements(ids);
@@ -103,132 +105,13 @@ const animateSingleBuilding = (ids) => {
 
 const animateArt1 = () => {
 
-    // gsap.set(`.shadow1`, { opacity: 0 });
-    gsap.set([
-        `.art[data-id='6']`,
-        `.art[data-id='7']`,
-        `.art[data-id='8']`,
-        `.art[data-id='9']`,
-        `.art[data-id='10']`,
-        `.art[data-id='11']`
-    ], { opacity: 1 });
-
-    const a1 = [`.art[data-id='6']`, `.art[data-id='9']`];
-    const a2 = [`.art[data-id='7']`, `.art[data-id='10']`];
-    const a3 = [`.art[data-id='8']`, `.art[data-id='11']`];
-
-    // --- Генерация SVG-маски и применение к каждому элементу группы ---
-    const applySvgMaskToArts = (group) => {
-        group.forEach(sel => {
-            const el = document.querySelector(sel);
-            if (!el) return;
-            const rect = el.getBoundingClientRect();
-            const width = rect.width;
-            const height = rect.height;
-            // SVG mask as data URL (треугольник снизу)
-            const svgString = `<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height+40}'><rect x='0' y='0' width='${width}' height='${height}' fill='white'/><polygon points='0,${height} ${width},${height} ${width/2},${height+40}' fill='white'/></svg>`;
-            const encoded = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
-            el.style.webkitMaskImage = `url('${encoded}')`;
-            el.style.maskImage = `url('${encoded}')`;
-            el.style.webkitMaskSize = 'cover';
-            el.style.maskSize = 'cover';
-            el.style.webkitMaskRepeat = 'no-repeat';
-            el.style.maskRepeat = 'no-repeat';
-        });
-    };
-
-    // Применяем SVG-маску к каждому элементу из a1
-    applySvgMaskToArts(a1);
-
-    // Анимация для a1, затем a2, затем a3, последовательно
-    const groups = [a1, a2, a3];
-    groups.forEach((group, i) => {
-        group.forEach((selector) => {
-            const el = document.querySelector(selector);
-            if (!el) return;
-            gsap.set(el, { y: 300 });
-            gsap.to(el, {
-                y: 0,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: `.art-group[data-id='1']`,
-                    start: () => `top+=${i * 50} center`,
-                    end: () => `top+=${i * 50 + 400} center`,
-                    scrub: true,
-                    toggleActions: "play none none reverse",
-                    // markers: true
-                }
-            });
-        });
-    });
 }
 
 const animateArt2 = () => {
-    let els = [        
-        `.art[data-id='12']`,
-        `.art[data-id='13']`,
-    ]
 
-    gsap.set(els, { opacity: 1, y: 650 });
-    gsap.to(els, {
-        y: 0,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: `.art-group[data-id="2"]`,
-            start: "top 50%",
-            end: "bottom 50%",
-            scrub: true,
-            // markers: true // для отладки
-        }
-    });
-
-    let masked = `.art-group[data-id="2"]`
-    gsap.set(masked, { clipPath: `ellipse(0% 0% at 50% 50%)` });
-    gsap.to(masked, {
-        clipPath: `ellipse(100% 65% at 50% 50%)`,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: `.art-group[data-id="2"]`,
-            start: "top 50%",
-            end: "bottom 50%",
-            scrub: true,
-            // markers: true // для отладки
-        }
-    });
 };
 
 const animateArt3 = () => {
-    let els = [        
-        `.art[data-id='18']`,
-        `.art[data-id='21']`
-    ]
-
-    gsap.set(els, { opacity: 1, y: 350 });
-    gsap.to(els, {
-        y: 0,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: `.art-group[data-id="3"]`,
-            start: "top 50%",
-            end: "bottom 50%",
-            scrub: true,
-            // markers: true // для отладки
-        }
-    });
-
-    let masked = `.art-group[data-id="3"]`
-    gsap.set(masked, { clipPath: `ellipse(0% 0% at 50% 50%)` });
-    gsap.to(masked, {
-        clipPath: `ellipse(100% 65% at 50% 50%)`,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: `.art-group[data-id="3"]`,
-            start: "top 50%",
-            end: "bottom 50%",
-            scrub: true,
-            // markers: true // для отладки
-        }
-    });
 
 }
 
@@ -457,46 +340,6 @@ const animateArt7 = () => {
 }
 
 const animateArt8 = () => {
-
-
-    let els = [        
-        `.art[data-id='43']`,
-        `.art[data-id='44']`,
-        `.art[data-id='45']`
-    ]
-
-    // gsap.set(els, { opacity: 1, y: 0});
-    gsap.set(els, { opacity: 1, y: 350 });
-
-    gsap.to(els, {
-        y: 0,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: `.art-group[data-id="8"]`,
-            start: "top 50%",
-            end: "bottom 50%",
-            scrub: true,
-            // markers: true // для отладки
-        }
-    });
-
-
-
-    let masked = document.querySelector(`.art-group[data-id="8"]`);
-    gsap.set(masked, { clipPath: `ellipse(30% 0% at 50% 50%)` });
-    gsap.to(masked, {
-        clipPath: `ellipse(100% 65% at 50% 50%)`,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: masked,
-            start: "top 50%",
-            end: "bottom 50%",
-            scrub: true,
-            // markers: true // для отладки
-        }
-    });
-
-
 }
 
 const animateArt9 = () => {
@@ -542,18 +385,18 @@ const animateArt10 = () => {
 
 export const animateArts = () => {
 
-    // animateSinglePersons(ids);
+    animateSinglePersons();
 
-    // animateArt1(); 
-    // animateArt2();
-    // animateArt3();
+    animateArt1(); 
+    animateArt2();
+    animateArt3();
     animateArt4();
     animateArt5();
-    // animateArt6();
+    animateArt6();
     animateArt7();
-    // animateArt8();
-    // animateArt9();
-    // animateArt10(); 
+    animateArt8();
+    animateArt9();
+    animateArt10(); 
  
 };
 
