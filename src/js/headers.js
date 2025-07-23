@@ -181,7 +181,7 @@ if (lg.matches) {
       ) {
         w.style.display = 'inline-block';
       }
-      gsap.set(w, { opacity: 0, y: 30, rotation: "random(-20, 20)", transformOrigin: 'center' });
+      gsap.set(w, { opacity: 0, y: 20, rotation: "random(-15, 15)", transformOrigin: 'center' });
     });
 
     // 5. ScrollTrigger для появления слов и обратной анимации

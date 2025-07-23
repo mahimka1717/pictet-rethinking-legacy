@@ -44,6 +44,17 @@ const animateSinglePersons = () => {
             // Родитель .art
             const parent = img.closest('.art');
             
+            // get .art data-id
+            let delta = `0%`
+            const dataId = parent ? parent.getAttribute('data-id') : null;
+            if(dataId && dataId === "24"){
+                if(lg.matches) {
+                    delta = `15%`
+                }
+                console.log(delta)
+            }
+
+
             if (!parent) return;
             gsap.set(img, { opacity: 0, x, y });
             gsap.to(img, {
@@ -54,7 +65,7 @@ const animateSinglePersons = () => {
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: parent,
-                    start: `top 75%`,
+                    start: `top 75%+=${delta}`,
                     toggleActions: "play none none reverse",
                     // markers: true // для отладки
                 }
@@ -127,7 +138,7 @@ const animateArt4 = () => {
         duration: 0.25,
         scrollTrigger: {
             trigger: ".crack",
-            start: "top center",
+            start: `top ${point}`,
             scrub: false,
             toggleActions: "play reverse play reverse",
  
@@ -138,8 +149,8 @@ const animateArt4 = () => {
         ease: "power1.inOut",
         scrollTrigger: {
             trigger: ".crack",
-            start: "top center",
-            end: "bottom center",
+            start: `top ${point}`,
+            end: `bottom ${point}`,
             scrub: true,
 
         }
@@ -151,8 +162,8 @@ const animateArt4 = () => {
         ease: "power1.inOut",
         scrollTrigger: {
             trigger: ".crack",
-            start: "top center",
-            end: "bottom center",
+            start: `top ${point}`,
+            end: `bottom ${point}`,
             scrub: true,
 
         }

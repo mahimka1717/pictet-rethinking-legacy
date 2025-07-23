@@ -655,8 +655,8 @@ const animateChart5 = () => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: svg,
-      start: `top ${point + (sm.matches ? '-=30%' : '+=10%')}`,
-      end: `center ${point}`,
+      start: `top ${point + (lg.matches ? '-=30%' : '+=10%')}`,
+      end: `center ${point + (lg.matches ? '-=30%' : '+=10%')}`,
       scrub: true,
     }
   });
