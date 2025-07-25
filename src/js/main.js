@@ -98,6 +98,10 @@ function createSmoothScrollStructure() {
 function ftFixSmoother() {
 
     const sOff = document.querySelector('.pictet-sign-off');
+    const cookie = document.querySelector('.o-cookie-message');
+    const leftPanel = document.querySelector('.left-panel');
+    const shareContainer = document.querySelector('.share-container');
+
     gsap.killTweensOf(sOff);
     gsap.set(sOff, { clearProps: "all" });
     gsap.set(sOff, { bottom: `unset`, top: 0 });
@@ -109,13 +113,37 @@ function ftFixSmoother() {
       end: '+=100000 top',
       pin: true,
       pinSpacing: false,
-  })
- 
-  let end = 'top+=77 bottom'
-  if (lg.matches) {
-    end = 'top bottom'
-  }
+    })
 
+    ScrollTrigger.create({
+      trigger: leftPanel,
+      start: 'top top',
+      end: '+=100000 top',
+      pin: true,
+      pinSpacing: false,
+    })
+
+    // ScrollTrigger.create({
+    //   trigger: shareContainer,
+    //   start: 'top top',
+    //   end: '+=100000 top',
+    //   pin: true,
+    //   pinSpacing: false,
+    // })
+ 
+    let end = 'top+=77 bottom'
+    if (lg.matches) {
+      end = 'top bottom'
+    }
+
+    ScrollTrigger.create({
+      trigger: cookie,
+      endTrigger: `.footer`,
+      start: 'bottom bottom-=20',
+      end: 'bottom top',
+      pin: cookie,
+      pinSpacing: false,
+  })
 
     ScrollTrigger.create({
       trigger: `.pictet-sign-off`,
@@ -124,7 +152,6 @@ function ftFixSmoother() {
       end: end,
       pin: true,
       pinSpacing: false,
-    //   markers: true
   })
 
     ScrollTrigger.create({
@@ -161,7 +188,7 @@ const cleanupAnimations = () => {
     gsap.killTweensOf("*");
 
     // Восстанавливаем CSS свойства элементов к первоначальному состоянию
-    cleanupElements();
+    // cleanupElements();
 
     // Убиваем ScrollSmoother
     if (smoother) {
@@ -171,20 +198,52 @@ const cleanupAnimations = () => {
 
     gsap.set('*', { clearProps: "all" });
 };
+
+
+// const cleanupElements = () => {
+    
+//     gsap.set('.text', { clearProps: "opacity" });
+
+   
+// }
+
+
 const reinitializeAnimations = () => {
 
     cleanupAnimations();
 
     gsap.delayedCall(0.1, () => {
 
+        gsap.set([
+        `.h1`,
+        `.h2`,
+        `.p`,
+        `.intro-p`,
+        ], { opacity: 0 })
+
         createScrollSmoother();
 
+        initNavigation();
+        animateText();
+        animateCharts();
+        animateLines();
+        animateArts();
+        animateQuote();
+        animateHeaders();
 
-        // Обновляем ScrollTriggers
         ScrollTrigger.refresh();
-    })
-}
 
+        gsap.to('#ag-infographic', {
+            opacity: 1,
+            duration: 0.75,
+            ease: 'power2.out',
+            onComplete: () => {
+                // ScrollTrigger.refresh();
+            }
+        });
+
+    });
+}
 
 
 const animateText = () => {
@@ -223,6 +282,9 @@ const animateText = () => {
 
 
 
+
+
+
 const init = () => {
     
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -231,36 +293,11 @@ const init = () => {
         // nullTargetWarn: false,
     });
 
-    gsap.delayedCall(0.1, () => {
-
-        gsap.set([
-        `.h1`,
-        `.h2`,
-        `.p`,
-        `.intro-p`,
-        // `.outtro-p`,
-        ], { opacity: 0 })
-
-        createScrollSmoother();
-
-        initNavigation();
-        animateText();
-        animateCharts();
-        animateLines();
-        animateArts();
-        animateQuote();
-        animateHeaders();
-
-        gsap.to('#ag-infographic', {
-            opacity: 1,
-            duration: 0.75,
-            ease: 'power2.out',
-            onComplete: () => {
-                ScrollTrigger.refresh();
-            }
-        });
-
-    });
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientationChange);
+    
+    // Инициализируем анимации
+    reinitializeAnimations();
 
 }
 

@@ -14,6 +14,7 @@ if (lg.matches) {
 
 
 export const animateQuote = () => {
+  
   const run = () => {
     // Найти все цитаты
     const quotes = document.querySelectorAll('.quote');
@@ -105,4 +106,5 @@ export const animateQuote = () => {
     // fallback, если FontFaceSet не поддерживается
     window.addEventListener('load', run);
   }
+  
 }

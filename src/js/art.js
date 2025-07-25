@@ -51,7 +51,7 @@ const animateSinglePersons = () => {
                 if(lg.matches) {
                     delta = `15%`
                 }
-                console.log(delta)
+                // console.log(delta)
             }
 
 
