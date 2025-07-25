@@ -36,15 +36,11 @@ mark
         display: block
         z-index: 2
 
-
-
-
 .o-cookie-message
     position: absolute
     z-index: 1000000
     bottom: unset
     top: calc(100vh - 284px)
-
 
 .left-panel
     height: calc(100vh + 107px)
@@ -59,14 +55,21 @@ mark
 
 .share-container
     position: absolute
-    height: 100vh
+    // height: 100vh
 //     left: -100vw !important
 
 // .share-container 
 //     &.open
 //         left: 0 !important
 
-
+.share-container-inner
+    // width: 500px
+    // position: absolute
+    // height: 465px
+    // left: 50%
+    // margin-left: -250px
+    top: calc((100vh - 465px)/2)
+    margin-top: unset
 
 .article *,
 .article *::before,
@@ -124,9 +127,6 @@ mark
             height: unset
             padding: 1rem
 
-
-
-
         .chapter
             position: relative
 
@@ -143,7 +143,6 @@ mark
                     height: unset
                     padding-top: 5.88rem
                     // padding-bottom: 19.38rem
-                
 
             &[data-id="1"]
                 height: calc(164rem + 7.45rem)
@@ -212,8 +211,6 @@ mark
                     left: unset
                     top: unset
                     width: 100%
-                    
-
 
                 // &::before
                 //     content: ""
@@ -241,7 +238,7 @@ mark
                     font-weight: 400
                     line-height: 120%
                     z-index: 1
-                    font-kerning: none 
+                    font-kerning: none
                     text-rendering: optimizeSpeed
                     @include mbp-down(lg)
                         font-size: 2.5rem
@@ -249,7 +246,6 @@ mark
                         margin: 0 auto
                     @include mbp-down(sm)
                         max-width: 350px
-                        
 
                         // margin-bottom: 4.12rem
 
@@ -340,7 +336,7 @@ mark
                 font-weight: 400
                 line-height: 120%
                 text-align: center
-                font-kerning: none 
+                font-kerning: none
                 text-rendering: optimizeSpeed
                 @include mbp-down(lg)
                     position: relative
@@ -349,7 +345,7 @@ mark
                     width: 100%
                     font-size: 1.85rem
                     margin-bottom: 3rem
-  
+
                 span
                     display: inline-block
                     font-size: 1.875rem
@@ -507,7 +503,6 @@ mark
                     top: calc(143.5625rem + 176px)
                     width: 42.25rem
 
-
                 &[data-id="0"],
                 &[data-id="1"],
                 &[data-id="2"],
@@ -535,7 +530,6 @@ mark
                     // font-weight: 600
                     color: $primary-color
                     text-decoration: underline
-                
 
             .outtro-p
                 position: absolute
@@ -631,7 +625,7 @@ mark
                 &[data-id="0"]
                     top: 125.45rem
                     @include mbp-down(lg)
-                        top: unset  
+                        top: unset
                     blockquote
                         max-width: 36.25rem
 
@@ -641,5 +635,3 @@ mark
                         top: unset
                     blockquote
                         max-width: 40.25rem
-
-            

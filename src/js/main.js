@@ -100,7 +100,9 @@ function ftFixSmoother() {
     const sOff = document.querySelector('.pictet-sign-off');
     const cookie = document.querySelector('.o-cookie-message');
     const leftPanel = document.querySelector('.left-panel');
-    const shareContainer = document.querySelector('.share-container');
+    const shareContainer = document.querySelector('.share-container-inner');
+
+    
 
     gsap.killTweensOf(sOff);
     gsap.set(sOff, { clearProps: "all" });
@@ -123,13 +125,13 @@ function ftFixSmoother() {
       pinSpacing: false,
     })
 
-    // ScrollTrigger.create({
-    //   trigger: shareContainer,
-    //   start: 'top top',
-    //   end: '+=100000 top',
-    //   pin: true,
-    //   pinSpacing: false,
-    // })
+    ScrollTrigger.create({
+      trigger: shareContainer,
+      start: 'center center',
+      end: '+=100000 center',
+      pin: true,
+      pinSpacing: false,
+    })
  
     let end = 'top+=77 bottom'
     if (lg.matches) {
