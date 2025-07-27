@@ -102,12 +102,20 @@ function ftFixSmoother() {
     const leftPanel = document.querySelector('.left-panel');
     const shareContainer = document.querySelector('.share-container-inner');
 
-    
+    let end = `top+=${lg.matches? 77 : 0} bottom`
 
     gsap.killTweensOf(sOff);
     gsap.set(sOff, { clearProps: "all" });
     gsap.set(sOff, { bottom: `unset`, top: 0 });
     const nav = document.querySelector('.nav');
+
+    // Скрываем рекламные и трекинговые элементы
+    document.querySelectorAll('img[src*="adsct"], img[src*="brandmetrics.com/Info"], img[src*="./demo_files/Info"]').forEach(el => {
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('iframe[id^="_hjSafeContext_"]').forEach(el => {
+        el.style.display = 'none';
+    });
 
     ScrollTrigger.create({
       trigger: `.m-pc`,
@@ -117,13 +125,17 @@ function ftFixSmoother() {
       pinSpacing: false,
     })
 
-    ScrollTrigger.create({
-      trigger: leftPanel,
-      start: 'top top',
-      end: '+=100000 top',
-      pin: true,
-      pinSpacing: false,
-    })
+    const shareBtn = document.querySelector('.left-panel .share-btn');
+    if (shareBtn) {
+      ScrollTrigger.create({
+        trigger: shareBtn,
+        endTrigger: `.footer`,
+        start: 'top bottom-=80',
+        end: end,
+        pin: true,
+        pinSpacing: false,
+      });
+    }
 
     ScrollTrigger.create({
       trigger: shareContainer,
@@ -133,10 +145,7 @@ function ftFixSmoother() {
       pinSpacing: false,
     })
  
-    let end = 'top+=77 bottom'
-    if (lg.matches) {
-      end = 'top bottom'
-    }
+
 
     ScrollTrigger.create({
       trigger: cookie,
@@ -201,14 +210,9 @@ const cleanupAnimations = () => {
     gsap.set('*', { clearProps: "all" });
 };
 
-
 // const cleanupElements = () => {
-    
 //     gsap.set('.text', { clearProps: "opacity" });
-
-   
 // }
-
 
 const reinitializeAnimations = () => {
 
@@ -247,7 +251,6 @@ const reinitializeAnimations = () => {
     });
 }
 
-
 const animateText = () => {
     document.querySelectorAll('.p, .intro-p').forEach(el => {
     // Сначала выставляем opacity 0
@@ -281,11 +284,6 @@ const animateText = () => {
     });
     });
 }
-
-
-
-
-
 
 const init = () => {
     

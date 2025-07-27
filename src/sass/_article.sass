@@ -25,7 +25,7 @@ mark
         position: absolute
         left: 0
         right: 0
-        bottom: 0.1em // чуть выше нижней линии, чтобы совпадало с text-decoration
+        bottom: 0.1em 
         height: 2.5px
         width: 100%
         background: currentColor
@@ -43,33 +43,21 @@ mark
     top: calc(100vh - 284px)
 
 .left-panel
-    height: calc(100vh + 107px)
-    position: absolute
-    top: -107px !important
-
     a
-        display: block
-        position: absolute
-        bottom: 0 !important
-        // border: 2px solid blue
+        top: calc(100vh - 80px)
 
 .share-container
     position: absolute
-    // height: 100vh
-//     left: -100vw !important
-
-// .share-container 
-//     &.open
-//         left: 0 !important
 
 .share-container-inner
-    // width: 500px
-    // position: absolute
-    // height: 465px
-    // left: 50%
-    // margin-left: -250px
     top: calc((100vh - 465px)/2)
     margin-top: unset
+
+
+
+
+
+
 
 .article *,
 .article *::before,
