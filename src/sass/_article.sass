@@ -36,11 +36,16 @@ mark
         display: block
         z-index: 2
 
+
 .o-cookie-message
     position: absolute
     z-index: 1000000
     bottom: unset
     top: calc(100vh - 284px)
+    @include mbp-down(lg)
+        top: calc(100vh - 304px)
+    @include mbp-down(sm)
+        top: calc(100vh - 314px)
 
 .left-panel
     a

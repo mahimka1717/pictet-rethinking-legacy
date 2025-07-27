@@ -9,56 +9,41 @@ import { animateArts } from "./art";
 import { animateQuote } from "./quote";
 import { initNavigation } from "./nav.js";
 
+
 export let smoother;
 
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-const xl = 1440;
-const md = 740;
 let resizeTimer;
-
-const sm = window.matchMedia('(max-width: 575px)');
 const lg = window.matchMedia('(max-width: 1299px)');
+const sm = window.matchMedia('(max-width: 575px)');
+let prevLgMatches = lg.matches;
+
+export const ftFixSmootherTriggers = [];
 
 // smoother
 const createScrollSmoother = () => {
     
     createSmoothScrollStructure();
-    
-    if (smoother) {
-        smoother.kill();
-    }
 
-    const wd = window.innerWidth;
-    const isTablet = wd > md && wd < xl;
-    
-    // Для планшетов отключаем эффекты у определенных элементов
-    if (isTablet) {
-        // Находим элементы, которые НЕ должны анимироваться на планшетах
-        const elementsToDisable = document.querySelectorAll([`.some-example-not-for-tablet`].join(', '));
-        
-        // Временно убираем data-speed атрибуты
-        elementsToDisable.forEach(el => {
-            el.dataset.originalSpeed = el.dataset.speed;
-            delete el.dataset.speed;
-        });
-    }
-    
+    let a = (smoother) ? true : false;
+    if (smoother) smoother.kill();
+
     smoother = ScrollSmoother.create({
-        smooth: 2, // Увеличенная плавность (медленнее прокрутка)
+        smooth: 2, 
         smoothTouch: 1,
-        // smoothTouch: isIOS?0.5:false, // Плавность для сенсорных устройств
-        effects: true, // window.innerWidth > md ? true : false, // Включаем эффекты только для больших экранов
-        
+        effects: true,
         normalizeScroll: (lg.matches) ? false : {
-            allowNestedScroll: true, // позволяет вложенную прокрутку
+            allowNestedScroll: true,
             type: "pointer,touch,wheel"
         },
-
         ignoreMobileResize: true,
     });
 
-    ftFixSmoother();
+    if(!a){
+      ftFixSmoother();
+    }
+    
 };
 
 function createSmoothScrollStructure() {
@@ -96,18 +81,22 @@ function createSmoothScrollStructure() {
 }
 
 function ftFixSmoother() {
+    
+    const nav = document.querySelector('.nav');
 
     const sOff = document.querySelector('.pictet-sign-off');
     const cookie = document.querySelector('.o-cookie-message');
-    const leftPanel = document.querySelector('.left-panel');
     const shareContainer = document.querySelector('.share-container-inner');
+    const shareBtn = document.querySelector('.left-panel .share-btn');
 
+    let cookieStart = `bottom bottom-=${sm.matches? 0 : 20}`
     let end = `top+=${lg.matches? 77 : 0} bottom`
+
 
     gsap.killTweensOf(sOff);
     gsap.set(sOff, { clearProps: "all" });
     gsap.set(sOff, { bottom: `unset`, top: 0 });
-    const nav = document.querySelector('.nav');
+
 
     // Скрываем рекламные и трекинговые элементы
     document.querySelectorAll('img[src*="adsct"], img[src*="brandmetrics.com/Info"], img[src*="./demo_files/Info"]').forEach(el => {
@@ -117,17 +106,18 @@ function ftFixSmoother() {
         el.style.display = 'none';
     });
 
-    ScrollTrigger.create({
+    const trigger1 = ScrollTrigger.create({
       trigger: `.m-pc`,
       start: 'top top',
       end: '+=100000 top',
       pin: true,
       pinSpacing: false,
     })
+    ftFixSmootherTriggers.push(trigger1);
 
-    const shareBtn = document.querySelector('.left-panel .share-btn');
-    if (shareBtn) {
-      ScrollTrigger.create({
+    
+
+     const trigger2 =  ScrollTrigger.create({
         trigger: shareBtn,
         endTrigger: `.footer`,
         start: 'top bottom-=80',
@@ -135,28 +125,29 @@ function ftFixSmoother() {
         pin: true,
         pinSpacing: false,
       });
-    }
+ftFixSmootherTriggers.push(trigger2);
 
-    ScrollTrigger.create({
+    const trigger3 = ScrollTrigger.create({
       trigger: shareContainer,
       start: 'center center',
       end: '+=100000 center',
       pin: true,
       pinSpacing: false,
     })
- 
+ ftFixSmootherTriggers.push(trigger3);
 
 
-    ScrollTrigger.create({
+    const trigger4 = ScrollTrigger.create({
       trigger: cookie,
       endTrigger: `.footer`,
-      start: 'bottom bottom-=20',
+      start: cookieStart,
       end: 'bottom top',
       pin: cookie,
       pinSpacing: false,
   })
+  ftFixSmootherTriggers.push(trigger4);
 
-    ScrollTrigger.create({
+    const trigger5 = ScrollTrigger.create({
       trigger: `.pictet-sign-off`,
       endTrigger: `.footer`,
       start: 'bottom bottom',
@@ -164,14 +155,16 @@ function ftFixSmoother() {
       pin: true,
       pinSpacing: false,
   })
+  ftFixSmootherTriggers.push(trigger5);
 
-    ScrollTrigger.create({
+   const trigger6 =  ScrollTrigger.create({
       trigger: nav,
       start: 'center center',
       end: '+=100000 top',
       pin: true,
       pinSpacing: false,
   })
+  ftFixSmootherTriggers.push(trigger6);
 
 
 
@@ -180,56 +173,53 @@ function ftFixSmoother() {
 const handleResize = () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-        reinitializeAnimations();
-    }, 250); // Задержка для избежания множественных вызовов
+        if (lg.matches !== prevLgMatches) {
+            prevLgMatches = lg.matches;
+            location.reload();
+        }
+    }, 200);
 };
-// Обработчик изменения ориентации
+
 const handleOrientationChange = () => {
-    // Ждем завершения поворота экрана
     setTimeout(() => {
-        reinitializeAnimations();
-    }, 250);
+        if (lg.matches !== prevLgMatches) {
+            prevLgMatches = lg.matches;
+            location.reload();
+        }
+    }, 200);
 };
-//////////// resize
+
 const cleanupAnimations = () => {
-    // Убиваем все ScrollTriggers
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    
-    // Убиваем все GSAP анимации
-    gsap.killTweensOf("*");
-
-    // Восстанавливаем CSS свойства элементов к первоначальному состоянию
-    // cleanupElements();
-
-    // Убиваем ScrollSmoother
-    if (smoother) {
-        smoother.kill();
-        smoother = null;
-    }
-
-    gsap.set('*', { clearProps: "all" });
+  // ScrollTrigger.getAll().forEach(trigger => {
+  //   const vars = trigger.vars || {};
+  //   // Не убиваем триггеры ScrollSmoother и связанные с dataSpeed/dataLag/effects
+  //   if (
+  //     !ftFixSmootherTriggers.includes(trigger)
+  //   ) {
+  //     trigger.kill();
+  //   }
+  // });
+    // gsap.killTweensOf("*");
+    // gsap.set('*', { clearProps: "all" });
 };
-
-// const cleanupElements = () => {
-//     gsap.set('.text', { clearProps: "opacity" });
-// }
 
 const reinitializeAnimations = () => {
 
     cleanupAnimations();
 
-    gsap.delayedCall(0.1, () => {
+    if(!smoother) {
+        createScrollSmoother();
+    }
 
-        gsap.set([
+         gsap.set([
         `.h1`,
         `.h2`,
         `.p`,
         `.intro-p`,
         ], { opacity: 0 })
 
-        createScrollSmoother();
-
         initNavigation();
+
         animateText();
         animateCharts();
         animateLines();
@@ -243,12 +233,7 @@ const reinitializeAnimations = () => {
             opacity: 1,
             duration: 0.75,
             ease: 'power2.out',
-            onComplete: () => {
-                // ScrollTrigger.refresh();
-            }
         });
-
-    });
 }
 
 const animateText = () => {
